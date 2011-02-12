@@ -64,7 +64,7 @@ function hublist_admin_debug($form, &$form_state) {
   $form['ping'] = array(
     '#type' => 'submit',
     '#value' => t('Ping'),
-    '#validate' => array('hublist_admin_debug_validate_url'),
+    '#validate' => array('hublist_admin_debug_validate_pinger_settings'),
   );
 
   return $form;
@@ -76,15 +76,15 @@ function hublist_admin_output(&$form_state) {
   switch ($form_state['storage']['protocol']) {
     case 'dchub://':
       $pinger = new NmdcPinger();
-      $result = $pinger->ping($form_state['storage']['host'], $form_state['storage']['port'], '[HUN]EHPinger_teszt', '', 0, 1, FALSE, 30, TRUE);
+      $result = $pinger->ping($form_state['storage']['host'], $form_state['storage']['port'], $form_state['storage']['pinger_nick'], $form_state['storage']['pinger_password'], $form_state['storage']['pinger_share'] * 1073741824 + 1, 1, FALSE, 30, TRUE);
       break;
     case 'adc://':
       $pinger = new AdcPinger();
-      $result = $pinger->ping($form_state['storage']['host'], $form_state['storage']['port'], '[HUN]EHPinger_teszt', '', 0, 1, FALSE, 30, TRUE);
+      $result = $pinger->ping($form_state['storage']['host'], $form_state['storage']['port'], $form_state['storage']['pinger_nick'], $form_state['storage']['pinger_password'], $form_state['storage']['pinger_share'] * 1073741824 + 1, 1, FALSE, 30, TRUE);
       break;
     case 'adcs://':
       $pinger = new AdcPinger();
-      $result = $pinger->ping($form_state['storage']['host'], $form_state['storage']['port'], '[HUN]EHPinger_teszt', '', 0, 1, TRUE, 30, TRUE);
+      $result = $pinger->ping($form_state['storage']['host'], $form_state['storage']['port'], $form_state['storage']['pinger_nick'], $form_state['storage']['pinger_password'], $form_state['storage']['pinger_share'] * 1073741824 + 1, 1, TRUE, 30, TRUE);
       break;
   }
 
@@ -96,6 +96,8 @@ function hublist_admin_output(&$form_state) {
     '#title' => t('Output'),
     '#collapsible' => FALSE,
   );
+  // TODO: Add a reminder here with the actual settings used for ping
+  // Such as: $form_state['storage']['pinger_nick'], $form_state['storage']['pinger_password'], $form_state['storage']['pinger_share']
   $form['pinger_output']['result'] = array(
     '#type' => 'textarea',
     '#title' => t('Result'),
@@ -112,8 +114,9 @@ function hublist_admin_output(&$form_state) {
   return $form;
 }
 
-// Validating hub url
-function hublist_admin_debug_validate_url($form, &$form_state) {
+// Validating Pinger settings
+function hublist_admin_debug_validate_pinger_settings($form, &$form_state) {
+  // Verifying hub address
   $address = Util::parseUrl($form_state['values']['hub_url']);
   if ($address['valid']) {
     $form_state['storage']['protocol'] = $address['protocol'];
@@ -122,6 +125,18 @@ function hublist_admin_debug_validate_url($form, &$form_state) {
   }
   else {
     form_set_error('hub_url', t('Please note that the protocol specifier is mandatory for ADC hubs (adc:// or adcs://), optional for NMDC hubs (dchub://), and you need to specify the port denoted by a colon. Examples: adc://test.hub.com:1234, dchub://test.hub.com'));
+  }
+  // Spaces in nick
+  if (strpos($form_state['values']['pinger_nick'], " ")) {
+    form_set_error("pinger_nick", t("<strong>Pinger nick</strong> cannot contain spaces."));
+  }
+  // Is pinger share a whole number?
+  if (preg_match("/^[0-9]{1,5}$/", $form_state['values']['pinger_share']) == 0) {
+    form_set_error("pinger_share", t("<strong>Pinger share</strong> must be a whole number with a maximum length of 5 characters."));
+  }
+  // Is pinger slots a number with a reasonable value?
+  if (preg_match("/^[0-9]{1,2}$/", $form_state['values']['pinger_slots']) == 0) {
+    form_set_error("pinger_slots", t("<strong>Slot number</strong> for the pinger must be a whole number between 0 and 99."));
   }
 }
 
@@ -132,5 +147,11 @@ function hublist_admin_debug_clear($form, &$form_state) {
 
 function hublist_admin_debug_submit($form, &$form_state) {
     $form_state['storage']['result_page'] = TRUE;
+	// Forwarding values to the second form. The hub address is already set,
+	// now we put the rest into the array
+	$form_state['storage']['pinger_nick'] = $form_state['values']['pinger_nick'];
+	$form_state['storage']['pinger_share'] = $form_state['values']['pinger_share'];
+	$form_state['storage']['pinger_slots'] = $form_state['values']['pinger_slots'];
+	$form_state['storage']['pinger_password'] = $form_state['values']['pinger_password'];
     $form_state['rebuild'] = TRUE;
 }
