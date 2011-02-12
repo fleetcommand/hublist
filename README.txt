@@ -11,19 +11,23 @@ updating list which can be viewed both online and from any modern DC client.
 Features
 --------
 * Hublist pinger with NMDC and ADC support
+* XML hublist generation
 * Hubs which are offline too many times are not pinged after a time
 * Users with permission can ban a hub
 * Option to filter duplicated hubs from the list
-* XML hublist generation
+* Debug window to manually ping a hub and see the protocol messages
 * Views support (required to create a summarized table for the hubs on the web)
 
 Prerequirements
 ---------------
 * Drupal 7.x
 * Date API module (included in http://drupal.org/project/date/)
+
+Optional
+--------
 * Views module (http://drupal.org/project/views)
-  - Actually Views module is only optional, but strongly recommended since
-    you can't create a web-based summarized table of the hubs without that
+  - Views module is only optional, but strongly recommended since you
+    can't create a web-based summarized table of the hubs without that
 
 Installation
 ------------
@@ -36,9 +40,10 @@ Installation
 
 Reporting bugs and contact
 --------------------------
-The SVN and the bug tracking system is hosted at SourceForge, so if you find
-any bugs or have any recommendation or question, visit the following site:
- * http://elitedc.sourceforge.net/
+Currently the project is hosted on github.com, so you can always get the
+latest version by visiting the project page. Whenever you find a bug,
+or you have a question or recommendation, feel free to open an Issue.
+ * https://github.com/fleetcommand/hublist
 
 Copyright
 ---------
