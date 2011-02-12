@@ -1,0 +1,586 @@
+# $Id$
+#
+# Hungarian translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  hub_datasheet.tpl.php: n/a
+#  views/hublist.views.inc: n/a
+#  hublist.module: n/a
+#  views/hublist_handler_filter_hub_status.inc: n/a
+#  hublist.admin.inc: n/a
+#  hublist.cron.inc: n/a
+#  hublist.info: n/a
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2010-04-16 17:58+0200\n"
+"PO-Revision-Date: 2010-04-16 18:21+0100\n"
+"Last-Translator: Molnár Szabolcs <fleet@elitemail.hu>\n"
+"Language-Team: Hungarian <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: hub_datasheet.tpl.php:47
+msgid "Basic info"
+msgstr "Alapvető adatok"
+
+#: hub_datasheet.tpl.php:48
+#: views/hublist.views.inc:59
+msgid "Hub address"
+msgstr "Hub cím"
+
+#: hub_datasheet.tpl.php:49
+#: views/hublist.views.inc:154
+msgid "Description"
+msgstr "Leírás"
+
+#: hub_datasheet.tpl.php:50
+msgid "Successful ping rate"
+msgstr "Sikeres ellenőrzések aránya"
+
+#: hub_datasheet.tpl.php:52
+#: views/hublist.views.inc:268;269
+msgid "Hub software"
+msgstr "Hubszoftver"
+
+#: hub_datasheet.tpl.php:54
+msgid "Notes"
+msgstr "Megjegyzések"
+
+#: hub_datasheet.tpl.php:60
+msgid "Contact"
+msgstr "Kapcsolat"
+
+#: hub_datasheet.tpl.php:62
+#: hublist.module:251
+#: views/hublist.views.inc:116
+msgid "Website"
+msgstr "Weboldal"
+
+#: hub_datasheet.tpl.php:64
+#: views/hublist.views.inc:135
+msgid "E-mail"
+msgstr "Email cím"
+
+#: hub_datasheet.tpl.php:71
+msgid "Current statistics"
+msgstr "Aktuális statisztika"
+
+#: hub_datasheet.tpl.php:72
+#: views/hublist.views.inc:287
+msgid "Usercount"
+msgstr "Felhasználószám"
+
+#: hub_datasheet.tpl.php:73
+msgid "Minimum share"
+msgstr "Minimum megosztás"
+
+#: hub_datasheet.tpl.php:74
+msgid "User limit"
+msgstr "Felhasználószám korlátja"
+
+#: hub_datasheet.tpl.php:75
+msgid "Total share"
+msgstr "Összes megosztás"
+
+#: hub_datasheet.tpl.php:76
+#: views/hublist.views.inc:401
+msgid "Minimum slots"
+msgstr "Minimum slotok"
+
+#: hub_datasheet.tpl.php:77
+#: views/hublist.views.inc:420
+msgid "Maximum hubs"
+msgstr "Maximum hubszám"
+
+#: hub_datasheet.tpl.php:82
+msgid "Status"
+msgstr "Állapot"
+
+#: hub_datasheet.tpl.php:83
+#: hublist.module:274
+#: views/hublist.views.inc:173
+#: views/hublist_handler_filter_hub_status.inc:26
+msgid "Hub status"
+msgstr "A hub állapota"
+
+#: hub_datasheet.tpl.php:85
+msgid "Additional information"
+msgstr "További információk"
+
+#: hub_datasheet.tpl.php:87
+#: hublist.module:306
+#: views/hublist.views.inc:249;250
+msgid "Latest ping attempt"
+msgstr "Utolsó ellenőrzési kísérlet"
+
+#: hublist.admin.inc:29
+msgid "Hublist settings"
+msgstr "Hublista beállításai"
+
+#: hublist.admin.inc:34
+msgid "Enable hublist generator"
+msgstr "Hublista készítés"
+
+#: hublist.admin.inc:36
+msgid "Check this field to enable hublist file generation."
+msgstr "Jelöld be ezt az opciót a hublista fájl létrehozásának engedélyezéséhez!"
+
+#: hublist.admin.inc:40
+msgid "Hublist URL"
+msgstr "Hublista URL"
+
+#: hublist.admin.inc:43
+msgid "The full URL of hublist. This will appear in the XML file."
+msgstr "A hublista teljes URL-e. Ez meg fog jelenni az XML fájlban."
+
+#: hublist.admin.inc:48
+msgid "Hublist name"
+msgstr "Hublista név"
+
+#: hublist.admin.inc:51
+msgid "Name of hublist. This will appear in the XML file."
+msgstr "A hublista neve. Ez megjelenik az XML fájlban."
+
+#: hublist.admin.inc:56
+msgid "Hublist description"
+msgstr "A hublista leírása"
+
+#: hublist.admin.inc:59
+msgid "This appears in the 'Description' column of the XML hublist. Note that the hublist generation time will be added automatically."
+msgstr "Az XML hublista 'Leírás' oszlopában fog megjelenni. Ne feledd, hogy a lista készítésének ideje automatikusan hozzáadásra kerül."
+
+#: hublist.admin.inc:63
+msgid "Hublist file"
+msgstr "Hublista fájl"
+
+#: hublist.admin.inc:66
+msgid "Absolute path of the compressed hublist file. The generated XML list will be saved here."
+msgstr "A tömörített hublista fájl abszolút elérési útvonala. Az elkészített és tömörített XML lista ide lesz elmentve."
+
+#: hublist.admin.inc:71
+msgid "XML file generation interval"
+msgstr "XML fájl készítésének gyakorisága"
+
+#: hublist.admin.inc:74
+msgid "Minimum time in minutes between XML file generation (specify 0 for generating it every time cron runs)."
+msgstr "Az XML fájl készítése közötti legkisebb időtartam (adj meg 0-t, ha azt szeretnéd, hogy minden cron futtatáskor készüljön lista)."
+
+#: hublist.admin.inc:79
+msgid "Pinger settings"
+msgstr "Pinger beállításai"
+
+#: hublist.admin.inc:84
+msgid "Enable automatic pinger"
+msgstr "Automatikus pingelés engedélyezése"
+
+#: hublist.admin.inc:86
+msgid "Check this field to enable automatic checking of hubs."
+msgstr "Jelöld be ezt az opciót a hubok autmatikus ellenőrzéséhez!"
+
+#: hublist.admin.inc:90
+#: hublist.module:212
+#: views/hublist.views.inc:211
+msgid "Pinger nick"
+msgstr "Pinger beceneve"
+
+#: hublist.admin.inc:94
+msgid "Default nick name for pinger robot."
+msgstr "A pinger robot alapértelmezett beceneve."
+
+#: hublist.admin.inc:98
+msgid "Checked hubs"
+msgstr "Ellenőrzött hubok"
+
+#: hublist.admin.inc:100
+msgid "Number of hubs checked at once."
+msgstr "Az egyszerre ellenőrizendő hubok száma."
+
+#: hublist.admin.inc:104
+msgid "Offline threshold count"
+msgstr "Offline számláló határértéke"
+
+#: hublist.admin.inc:106
+msgid "If a hub is offline this many times in a line, it will become 'Inactive' and won't be pinged automatically anymore."
+msgstr "Ha egy hub egymás után ennyiszer elérhetetlen, 'Inaktívvá' fog válni és nem lesz többé automatikusan ellenőrizve."
+
+#: hublist.admin.inc:110
+msgid "Advanced settings"
+msgstr "Haladó beállítások"
+
+#: hublist.admin.inc:115
+msgid "Filter duplicated hubs from the list"
+msgstr "Dupla hubok kiszűrése a listáról"
+
+#: hublist.admin.inc:117
+msgid "This will automatically detect and disable duplicated hubs on pinging."
+msgstr "Pingelés közben automatikusan megkeresi és letiltja a duplikált hubokat."
+
+#: hublist.admin.inc:121
+msgid "Output received protocol messages"
+msgstr "Bejövő protokoll üzenetek kiírása"
+
+#: hublist.admin.inc:123
+msgid "Check this field to make NMDC and ADC debug messages appear on your screen when running cron manually. <strong>It is recommended to only enable it on development sites.</strong>"
+msgstr "Engedélyezd ezt az opciót, ha az NMDC és ADC üzeneteket látni szeretnéd a képernyődön, ha a cron-t kézzel futtatod. <strong>Javasolt, hogy ezt csak fejlesztés alatt álló oldalakon engedélyezd.</strong>"
+
+#: hublist.cron.inc:86;89
+msgid "view"
+msgstr "megtekintés"
+
+#: hublist.cron.inc:86;89
+msgid "pinger"
+msgstr "pinger"
+
+#: hublist.cron.inc:86
+msgid "Checking @huburl failed: @errormsg"
+msgstr "A @huburl ellenőrzése sikertelen: @errormsg"
+
+#: hublist.cron.inc:89
+msgid "A problem occured while checking @huburl: @errormsg"
+msgstr "Hiba történt a(z) @huburl ellenőrzése során: @errormsg"
+
+#: hublist.module:28
+msgid "Hub"
+msgstr "Hub"
+
+#: hublist.module:31
+msgid "Hub name"
+msgstr "Hub név"
+
+#: hublist.module:32
+msgid "An ADC or NMDC hub which will be included in the hublist"
+msgstr "Egy ADC vagy NMDC hub, amely meg fog jelenni a hublistában"
+
+#: hublist.module:107
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+#: hublist.module:111;277
+#: views/hublist_handler_filter_hub_status.inc:29
+msgid "Waiting for hublist pinger"
+msgstr "Várakozás a hublista pingerre"
+
+#: hublist.module:114;278
+#: views/hublist_handler_filter_hub_status.inc:30
+msgid "Online"
+msgstr "Online"
+
+#: hublist.module:117;279
+#: views/hublist_handler_filter_hub_status.inc:31
+msgid "Offline"
+msgstr "Offline"
+
+#: hublist.module:120;280
+#: views/hublist_handler_filter_hub_status.inc:32
+msgid "Banned"
+msgstr "Banolt"
+
+#: hublist.module:123;281
+#: views/hublist_handler_filter_hub_status.inc:33
+msgid "Inactive"
+msgstr "Inaktív"
+
+#: hublist.module:126;282
+msgid "Duplicate"
+msgstr "Duplikáció"
+
+#: hublist.module:161
+msgid "Basic hub info"
+msgstr "A hub alapvető adatai"
+
+#: hublist.module:166
+msgid "Protocol"
+msgstr "Protokol"
+
+#: hublist.module:167
+msgid "Select the protocol your hub is using. Choose dchub:// in case of regular NMDC hub software like Aquila, Ptokax, Verlihub, YnHub, etc. Select adc:// or adcs:// in case of ADC hub software like ADCH++ or uHub."
+msgstr "Add meg a hub által használt protokollt! Válaszd a dchub://-ot hagyományos NMDC hub esetén, mint például az Aquila, Ptokax, Verlihub, YnHub, stb. Válaszd az adc://-t vagy adcs://-t ADC hub szoftver esetén, mint például az ADCH++ vagy uHub."
+
+#: hublist.module:179
+#: views/hublist.views.inc:60
+msgid "Hub host and port"
+msgstr "Kiszolgáló és port"
+
+#: hublist.module:180
+msgid "Enter hub host and port denoted by a colon. For example <strong>my.hub.com:5396</strong>"
+msgstr "Add meg a kiszolgáló címét és portját kettősponttal elválasztva! Például <strong>en.hubom.com:5396</strong>"
+
+#: hublist.module:199
+msgid "Information shared with users"
+msgstr "Felhasználókkal megosztandó információk"
+
+#: hublist.module:200
+msgid "If you want to share any important information about connecting to or using the hub, you can enter here. <strong>This will be visible on the hub datasheet on the web, but not in the hublist for the clients.</strong>"
+msgstr "Ha a hubhoz való csatlakozással vagy a hub használatával kapcsolatban meg szeretnél osztani bármilyen információt a felhasználókkal, itt megteheted. <strong>Ez látható lesz a hub webes adatlapján, de nem lesz látható a kliensekből elérhető listában.</strong>"
+
+#: hublist.module:206
+msgid "Hublist pinger"
+msgstr "Hublista pinger"
+
+#: hublist.module:207
+msgid "A robot program called 'Hublist pinger' is running in the background which connects to the hubs from time to time and verifies the user count and other data. Finally it updates the hub in the hublist.<br />If you want, you can specify a user name and password here for the hublist pinger. It is not mandatory, but you may want to customize it if you have a minimum share requirement on your hub which would cause the pinger to be disconnected or if you registered a user for the pinger on your hub.<br /><strong>Important:</strong> If the pinger can't connect, the hub won't appear in the hublist."
+msgstr "Folyamatosan fut egy 'Hublista pinger'-nek nevezett robot program, amely időről időre csatlakozik a hubokhoz és ellenőrzi a felhasználó-létszámot és egyéb adatokat. Végül frissíti a hub adatait a hublistában.<br />Ha szeretnéd, megadhatsz egy felhasználónevet és jelszót a pinger számára. Ez nem kötelező, de szükség lehet a testreszabásra, ha olyan szabályok vannak a hubon, ami miatt a pinger nem tudna belépni, vagy ezektől függetlenül regisztráltál egy felhasználót a pingernek.<br /><strong>Fontos:</strong> Ha a pinger nem tud csatlakozni a hubhoz, az nem jelenik meg a listában!"
+
+#: hublist.module:213
+msgid "The user name of the pinger. If you leave it blank, the default nick will be used."
+msgstr "A pinger felhasználóneve. Ha üresen hagyod, az alapértelmezett becenév kerül használatra."
+
+#: hublist.module:220
+msgid "Pinger password"
+msgstr "Pinger jelszó"
+
+#: hublist.module:221
+msgid "Enter the password here if you registered a user for the pinger. Leave it blank if no password is required for connecting to your hub."
+msgstr "Add meg a pinger jelszavát, ha regisztráltál neki felhasználót a hubodon. Hagyd üresen, ha nem szükséges jelszó a hubhoz való csatlakozáshoz."
+
+#: hublist.module:228
+msgid "Opened slots claimed by the pinger"
+msgstr "A pinger által használt slotszám"
+
+#: hublist.module:229
+msgid "Specify here how many open slots should the pinger claim to have when checking your hub."
+msgstr "Add meg, hány slotot használjon a pinger a hubra való belépéshez."
+
+#: hublist.module:237
+msgid "Pinger share (GiB)"
+msgstr "Pinger megosztása (GiB)"
+
+#: hublist.module:238
+msgid "By default, the hublist pinger enters the hub by claiming 0 B shared. If you have a minimum share requirement on the hub, you may want to specify here how many GiB should the pinger use when checking your hub (whole number). Note that if the pinger cannot connect, your hub won't show up in the hublist."
+msgstr "Alapértelmezés szerint a hublista pinger 0 B megosztással lép be a hubra. Ha a hubodon minimum megosztási limit van, itt megadhatod, hány GiB megosztást használjon a pinger a hubod ellenőrzésekor (egész szám). Ne feledd, hogy a hubod nem fog megjelenni a hublistában, ha a pinger nem tud csatlakozni!"
+
+#: hublist.module:246
+msgid "Contact info"
+msgstr "Kapcsolati adatok"
+
+#: hublist.module:252
+msgid "If the hub has a website, specify its URL here."
+msgstr "Ha a hub rendelkezik weboldallal, itt megadhatod az URL-jét."
+
+#: hublist.module:259
+#: views/hublist.views.inc:136
+msgid "Contact e-mail"
+msgstr "Kapcsolattartási e-mail cím"
+
+#: hublist.module:260
+msgid "A public e-mail address for the users which is <strong>visible</strong> on the hub datasheet."
+msgstr "Egy publikus e-mail cím a felhasználóknak, ami <strong>látható lesz</strong> a hub webes adatlapján."
+
+#: hublist.module:269
+msgid "Administration"
+msgstr "Adminisztráció"
+
+#: hublist.module:289
+msgid "Comment for status"
+msgstr "Megjegyzés az állapothoz"
+
+#: hublist.module:290
+msgid "Comment which explains the status of the hub. For example, you can specify here the ban reason."
+msgstr "Megjegyzés, ami megmagyarázza a hub állapotát. Például itt megadhatod a kitiltás okát."
+
+#: hublist.module:297
+#: views/hublist.views.inc:477
+msgid "Offline counter"
+msgstr "Offline számláló"
+
+#: hublist.module:298
+msgid "This field specifies the number of unsuccessful ping attempts in a row. If this reaches a predefined value, the hub is set to 'Inactive' and won't be pinged anymore. See the hublist administration page for details."
+msgstr "Ez a mező megadja az egy huzamban történt sikertelen pingelési kísérletek számát. Ha elér egy előre meghatározott értéket, a hub 'Inaktív' állapotúra lesz állítva és nem lesz többé automatikusan ellenőrizve. Nézd meg a hublista adminisztrációs oldalt a részletekért!"
+
+#: hublist.module:307
+msgid "The hubs are pinged in order, so the older a hub was pinged, the greater the chance to get checked again."
+msgstr "A hubok időrendi sorrendben vannak pingelve, tehát egy hub minél régebben volt utoljára ellenőrizve, annál nagyobb az esélye, hogy sorra kerül."
+
+#: hublist.module:324
+msgid "<strong>Hub host</strong> cannot contain spaces."
+msgstr "A <strong>Hub címe</strong> nem tartalmazhat szóközöket!"
+
+#: hublist.module:330
+msgid "A hub with the <strong>same address</strong> already exists in the hub list. You cannot add a hub twice."
+msgstr "A hublistában már létezik egy másik hub <strong>ugyanezzel a címmel</strong>. Nem vehetsz fel egy hubot kétszer!"
+
+#: hublist.module:336
+msgid "<strong>Pinger nick</strong> cannot contain spaces."
+msgstr "A <strong>Pinger beceneve</strong> nem tartalmazhat szóközöket!"
+
+#: hublist.module:341
+msgid "<strong>Pinger share</strong> must be a whole number with a maximum length of 5 characters."
+msgstr "A <strong>Pinger megosztása</strong> csak egy - legfeljebb 5 karakter hosszú - egész szám lehet."
+
+#: hublist.module:346
+msgid "<strong>Slot number</strong> for the pinger must be a whole number between 0 and 99."
+msgstr "A pinger által használt <strong>slotok száma</strong> csak 0 és 99 közötti egész szám lehet!"
+
+#: hublist.module:351
+msgid "<strong>Hub information</strong> is too long. Should not be longer than 4096 characters. Current length:"
+msgstr "A <strong>Hub információ</strong> szöveg túl hosszú: nem lehet 4096 karakternél több. A beírt szöveg hossza:"
+
+#: hublist.module:447
+msgid "create hub"
+msgstr "hub létrehozása"
+
+#: hublist.module:447
+msgid "delete own hubs"
+msgstr "saját hubok törlése"
+
+#: hublist.module:447
+msgid "delete any hub"
+msgstr "bármely hub törlése"
+
+#: hublist.module:447
+msgid "edit own hubs"
+msgstr "saját hubok szerkesztése"
+
+#: hublist.module:447
+msgid "edit any hub"
+msgstr "bármely hub szerkesztése"
+
+#: hublist.module:447
+msgid "administer hublist"
+msgstr "hublista adminisztrációja"
+
+#: hublist.module:424
+msgid "Direct Connect Hublist"
+msgstr "Direct Connect Hublista"
+
+#: hublist.module:425
+msgid "Configure Direct Connect Hublist module"
+msgstr "A Direct Connect Hublista modul beállítása"
+
+#: hublist.info:0
+#: views/hublist.views.inc:25
+msgid "Hublist"
+msgstr "Hublista"
+
+#: hublist.info:0
+msgid "A Direct Connect hublist with NMDC, ADC and ADCS support"
+msgstr "Direct Connect hublista NMDC, ADC és ADCS támogatással"
+
+#: views/hublist.views.inc:40
+msgid "Hub protocol"
+msgstr "Hub protokoll"
+
+#: views/hublist.views.inc:41
+msgid "Protocol of the hub (adc://, adcs:// or dchub://)"
+msgstr "A hub protokollja (adc://, adcs:// vagy dchub://)"
+
+#: views/hublist.views.inc:78
+msgid "Hub URL"
+msgstr "Hub URL"
+
+#: views/hublist.views.inc:79
+msgid "Full Hub URL so you don't have to append the protocol and address together to get a clickable url."
+msgstr "A teljes hub URL, így nem szükséges összeraknod a protokollt és a címet, hogy kattintható URL-t kapj."
+
+#: views/hublist.views.inc:97
+msgid "Hub notes"
+msgstr "Megjegyzések"
+
+#: views/hublist.views.inc:98
+msgid "Important notes for the users"
+msgstr "Fontos tudnivalók"
+
+#: views/hublist.views.inc:117
+msgid "Hub website"
+msgstr "A hub weboldala"
+
+#: views/hublist.views.inc:155
+msgid "Description of the hub"
+msgstr "A hub leírása"
+
+#: views/hublist.views.inc:174
+msgid "Online status of the hub"
+msgstr "A hub online állapota"
+
+#: views/hublist.views.inc:192;193
+msgid "Comment for hub status"
+msgstr "Megjegyzés a hub állapotához"
+
+#: views/hublist.views.inc:212
+msgid "Nick of the hublist pinger for the hub if not using the default"
+msgstr "A hublista pinger nickje a hubon, ha nem az alapértelmezetettet használja"
+
+#: views/hublist.views.inc:230
+msgid "Pinger share"
+msgstr "A pinger megosztása"
+
+#: views/hublist.views.inc:231
+msgid "Pinger share in GiB"
+msgstr "A pinger megosztása GiB-ban"
+
+#: views/hublist.views.inc:288
+msgid "Current user count"
+msgstr "Aktuális felhasználó-létszám"
+
+#: views/hublist.views.inc:306
+msgid "Userlimit"
+msgstr "Maximális felhasználószám"
+
+#: views/hublist.views.inc:307
+msgid "Maximum users"
+msgstr "A maximális felhasználószám"
+
+#: views/hublist.views.inc:325
+msgid "Shared bytes"
+msgstr "Megosztott bájtok"
+
+#: views/hublist.views.inc:326
+msgid "Currently shared bytes"
+msgstr "Aktuálisan megosztott bájtok"
+
+#: views/hublist.views.inc:344
+msgid "Shared data amount (formatted)"
+msgstr "Megosztott adatmennyiség (formázott)"
+
+#: views/hublist.views.inc:345
+msgid "Currently shared bytes (formatted)"
+msgstr "Az aktuálisan megosztott adatmennyiség (formázott)"
+
+#: views/hublist.views.inc:363
+msgid "Minimum share requirement in bytes"
+msgstr "Minimum megosztási limit bájtokban"
+
+#: views/hublist.views.inc:364
+msgid "Minimum share to enter to the hub in bytes"
+msgstr "A hubra lépéshez szükséges adatmennyiség bájtokban"
+
+#: views/hublist.views.inc:382
+msgid "Minimum share (formatted)"
+msgstr "Minimum megosztás (formázott)"
+
+#: views/hublist.views.inc:383
+msgid "Minimum share to enter to the hub (formatted)"
+msgstr "A hubra lépéshez szükséges adatmennyiség (formázott)"
+
+#: views/hublist.views.inc:402
+msgid "Minimum slots you need to open to be able to join"
+msgstr "A hubra lépéshez szükséges minimum slotszám"
+
+#: views/hublist.views.inc:421
+msgid "Maximum number of hubs"
+msgstr "Hubok maximális száma"
+
+#: views/hublist.views.inc:439;440
+msgid "Successful ping attempts"
+msgstr "Sikeres pingelési kísérletek"
+
+#: views/hublist.views.inc:458;459
+msgid "All ping attempts"
+msgstr "Összes pingelési kísérlet"
+
+#: views/hublist.views.inc:478
+msgid "Shows how many times is this hub offline in a row"
+msgstr "Megmutatja, hogy a hub hányszor volt egymás után elérhetetlen"
+
+#: views/hublist.views.inc:496
+msgid "Reliability (formatted)"
+msgstr "Megbízhatóság (formázott)"
+
+#: views/hublist.views.inc:497
+msgid "Hub reliability"
+msgstr "A hub megbízhatósága"
+

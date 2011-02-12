@@ -1,0 +1,562 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  hub_datasheet.tpl.php: n/a
+#  views/hublist.views.inc: n/a
+#  hublist.module: n/a
+#  views/hublist_handler_filter_hub_status.inc: n/a
+#  hublist.admin.inc: n/a
+#  hublist.cron.inc: n/a
+#  hublist.info: n/a
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2010-04-16 17:58+0200\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: hub_datasheet.tpl.php:47
+msgid "Basic info"
+msgstr ""
+
+#: hub_datasheet.tpl.php:48 views/hublist.views.inc:59
+msgid "Hub address"
+msgstr ""
+
+#: hub_datasheet.tpl.php:49 views/hublist.views.inc:154
+msgid "Description"
+msgstr ""
+
+#: hub_datasheet.tpl.php:50
+msgid "Successful ping rate"
+msgstr ""
+
+#: hub_datasheet.tpl.php:52 views/hublist.views.inc:268;269
+msgid "Hub software"
+msgstr ""
+
+#: hub_datasheet.tpl.php:54
+msgid "Notes"
+msgstr ""
+
+#: hub_datasheet.tpl.php:60
+msgid "Contact"
+msgstr ""
+
+#: hub_datasheet.tpl.php:62 hublist.module:251 views/hublist.views.inc:116
+msgid "Website"
+msgstr ""
+
+#: hub_datasheet.tpl.php:64 views/hublist.views.inc:135
+msgid "E-mail"
+msgstr ""
+
+#: hub_datasheet.tpl.php:71
+msgid "Current statistics"
+msgstr ""
+
+#: hub_datasheet.tpl.php:72 views/hublist.views.inc:287
+msgid "Usercount"
+msgstr ""
+
+#: hub_datasheet.tpl.php:73
+msgid "Minimum share"
+msgstr ""
+
+#: hub_datasheet.tpl.php:74
+msgid "User limit"
+msgstr ""
+
+#: hub_datasheet.tpl.php:75
+msgid "Total share"
+msgstr ""
+
+#: hub_datasheet.tpl.php:76 views/hublist.views.inc:401
+msgid "Minimum slots"
+msgstr ""
+
+#: hub_datasheet.tpl.php:77 views/hublist.views.inc:420
+msgid "Maximum hubs"
+msgstr ""
+
+#: hub_datasheet.tpl.php:82
+msgid "Status"
+msgstr ""
+
+#: hub_datasheet.tpl.php:83 hublist.module:274 views/hublist.views.inc:173 views/hublist_handler_filter_hub_status.inc:26
+msgid "Hub status"
+msgstr ""
+
+#: hub_datasheet.tpl.php:85
+msgid "Additional information"
+msgstr ""
+
+#: hub_datasheet.tpl.php:87 hublist.module:306 views/hublist.views.inc:249;250
+msgid "Latest ping attempt"
+msgstr ""
+
+#: hublist.admin.inc:29
+msgid "Hublist settings"
+msgstr ""
+
+#: hublist.admin.inc:34
+msgid "Enable hublist generator"
+msgstr ""
+
+#: hublist.admin.inc:36
+msgid "Check this field to enable hublist file generation."
+msgstr ""
+
+#: hublist.admin.inc:40
+msgid "Hublist URL"
+msgstr ""
+
+#: hublist.admin.inc:43
+msgid "The full URL of hublist. This will appear in the XML file."
+msgstr ""
+
+#: hublist.admin.inc:48
+msgid "Hublist name"
+msgstr ""
+
+#: hublist.admin.inc:51
+msgid "Name of hublist. This will appear in the XML file."
+msgstr ""
+
+#: hublist.admin.inc:56
+msgid "Hublist description"
+msgstr ""
+
+#: hublist.admin.inc:59
+msgid "This appears in the 'Description' column of the XML hublist. Note that the hublist generation time will be added automatically."
+msgstr ""
+
+#: hublist.admin.inc:63
+msgid "Hublist file"
+msgstr ""
+
+#: hublist.admin.inc:66
+msgid "Absolute path of the compressed hublist file. The generated XML list will be saved here."
+msgstr ""
+
+#: hublist.admin.inc:71
+msgid "XML file generation interval"
+msgstr ""
+
+#: hublist.admin.inc:74
+msgid "Minimum time in minutes between XML file generation (specify 0 for generating it every time cron runs)."
+msgstr ""
+
+#: hublist.admin.inc:79
+msgid "Pinger settings"
+msgstr ""
+
+#: hublist.admin.inc:84
+msgid "Enable automatic pinger"
+msgstr ""
+
+#: hublist.admin.inc:86
+msgid "Check this field to enable automatic checking of hubs."
+msgstr ""
+
+#: hublist.admin.inc:90 hublist.module:212 views/hublist.views.inc:211
+msgid "Pinger nick"
+msgstr ""
+
+#: hublist.admin.inc:94
+msgid "Default nick name for pinger robot."
+msgstr ""
+
+#: hublist.admin.inc:98
+msgid "Checked hubs"
+msgstr ""
+
+#: hublist.admin.inc:100
+msgid "Number of hubs checked at once."
+msgstr ""
+
+#: hublist.admin.inc:104
+msgid "Offline threshold count"
+msgstr ""
+
+#: hublist.admin.inc:106
+msgid "If a hub is offline this many times in a line, it will become 'Inactive' and won't be pinged automatically anymore."
+msgstr ""
+
+#: hublist.admin.inc:110
+msgid "Advanced settings"
+msgstr ""
+
+#: hublist.admin.inc:115
+msgid "Filter duplicated hubs from the list"
+msgstr ""
+
+#: hublist.admin.inc:117
+msgid "This will automatically detect and disable duplicated hubs on pinging."
+msgstr ""
+
+#: hublist.admin.inc:121
+msgid "Output received protocol messages"
+msgstr ""
+
+#: hublist.admin.inc:123
+msgid "Check this field to make NMDC and ADC debug messages appear on your screen when running cron manually. <strong>It is recommended to only enable it on development sites.</strong>"
+msgstr ""
+
+#: hublist.cron.inc:86;89
+msgid "view"
+msgstr ""
+
+#: hublist.cron.inc:86;89
+msgid "pinger"
+msgstr ""
+
+#: hublist.cron.inc:86
+msgid "Checking @huburl failed: @errormsg"
+msgstr ""
+
+#: hublist.cron.inc:89
+msgid "A problem occured while checking @huburl: @errormsg"
+msgstr ""
+
+#: hublist.module:28
+msgid "Hub"
+msgstr ""
+
+#: hublist.module:31
+msgid "Hub name"
+msgstr ""
+
+#: hublist.module:32
+msgid "An ADC or NMDC hub which will be included in the hublist"
+msgstr ""
+
+#: hublist.module:107
+msgid "Unknown"
+msgstr ""
+
+#: hublist.module:111;277 views/hublist_handler_filter_hub_status.inc:29
+msgid "Waiting for hublist pinger"
+msgstr ""
+
+#: hublist.module:114;278 views/hublist_handler_filter_hub_status.inc:30
+msgid "Online"
+msgstr ""
+
+#: hublist.module:117;279 views/hublist_handler_filter_hub_status.inc:31
+msgid "Offline"
+msgstr ""
+
+#: hublist.module:120;280 views/hublist_handler_filter_hub_status.inc:32
+msgid "Banned"
+msgstr ""
+
+#: hublist.module:123;281 views/hublist_handler_filter_hub_status.inc:33
+msgid "Inactive"
+msgstr ""
+
+#: hublist.module:126;282
+msgid "Duplicate"
+msgstr ""
+
+#: hublist.module:161
+msgid "Basic hub info"
+msgstr ""
+
+#: hublist.module:166
+msgid "Protocol"
+msgstr ""
+
+#: hublist.module:167
+msgid "Select the protocol your hub is using. Choose dchub:// in case of regular NMDC hub software like Aquila, Ptokax, Verlihub, YnHub, etc. Select adc:// or adcs:// in case of ADC hub software like ADCH++ or uHub."
+msgstr ""
+
+#: hublist.module:179 views/hublist.views.inc:60
+msgid "Hub host and port"
+msgstr ""
+
+#: hublist.module:180
+msgid "Enter hub host and port denoted by a colon. For example <strong>my.hub.com:5396</strong>"
+msgstr ""
+
+#: hublist.module:199
+msgid "Information shared with users"
+msgstr ""
+
+#: hublist.module:200
+msgid "If you want to share any important information about connecting to or using the hub, you can enter here. <strong>This will be visible on the hub datasheet on the web, but not in the hublist for the clients.</strong>"
+msgstr ""
+
+#: hublist.module:206
+msgid "Hublist pinger"
+msgstr ""
+
+#: hublist.module:207
+msgid "A robot program called 'Hublist pinger' is running in the background which connects to the hubs from time to time and verifies the user count and other data. Finally it updates the hub in the hublist.<br />If you want, you can specify a user name and password here for the hublist pinger. It is not mandatory, but you may want to customize it if you have a minimum share requirement on your hub which would cause the pinger to be disconnected or if you registered a user for the pinger on your hub.<br /><strong>Important:</strong> If the pinger can't connect, the hub won't appear in the hublist."
+msgstr ""
+
+#: hublist.module:213
+msgid "The user name of the pinger. If you leave it blank, the default nick will be used."
+msgstr ""
+
+#: hublist.module:220
+msgid "Pinger password"
+msgstr ""
+
+#: hublist.module:221
+msgid "Enter the password here if you registered a user for the pinger. Leave it blank if no password is required for connecting to your hub."
+msgstr ""
+
+#: hublist.module:228
+msgid "Opened slots claimed by the pinger"
+msgstr ""
+
+#: hublist.module:229
+msgid "Specify here how many open slots should the pinger claim to have when checking your hub."
+msgstr ""
+
+#: hublist.module:237
+msgid "Pinger share (GiB)"
+msgstr ""
+
+#: hublist.module:238
+msgid "By default, the hublist pinger enters the hub by claiming 0 B shared. If you have a minimum share requirement on the hub, you may want to specify here how many GiB should the pinger use when checking your hub (whole number). Note that if the pinger cannot connect, your hub won't show up in the hublist."
+msgstr ""
+
+#: hublist.module:246
+msgid "Contact info"
+msgstr ""
+
+#: hublist.module:252
+msgid "If the hub has a website, specify its URL here."
+msgstr ""
+
+#: hublist.module:259 views/hublist.views.inc:136
+msgid "Contact e-mail"
+msgstr ""
+
+#: hublist.module:260
+msgid "A public e-mail address for the users which is <strong>visible</strong> on the hub datasheet."
+msgstr ""
+
+#: hublist.module:269
+msgid "Administration"
+msgstr ""
+
+#: hublist.module:289
+msgid "Comment for status"
+msgstr ""
+
+#: hublist.module:290
+msgid "Comment which explains the status of the hub. For example, you can specify here the ban reason."
+msgstr ""
+
+#: hublist.module:297 views/hublist.views.inc:477
+msgid "Offline counter"
+msgstr ""
+
+#: hublist.module:298
+msgid "This field specifies the number of unsuccessful ping attempts in a row. If this reaches a predefined value, the hub is set to 'Inactive' and won't be pinged anymore. See the hublist administration page for details."
+msgstr ""
+
+#: hublist.module:307
+msgid "The hubs are pinged in order, so the older a hub was pinged, the greater the chance to get checked again."
+msgstr ""
+
+#: hublist.module:324
+msgid "<strong>Hub host</strong> cannot contain spaces."
+msgstr ""
+
+#: hublist.module:330
+msgid "A hub with the <strong>same address</strong> already exists in the hub list. You cannot add a hub twice."
+msgstr ""
+
+#: hublist.module:336
+msgid "<strong>Pinger nick</strong> cannot contain spaces."
+msgstr ""
+
+#: hublist.module:341
+msgid "<strong>Pinger share</strong> must be a whole number with a maximum length of 5 characters."
+msgstr ""
+
+#: hublist.module:346
+msgid "<strong>Slot number</strong> for the pinger must be a whole number between 0 and 99."
+msgstr ""
+
+#: hublist.module:351
+msgid "<strong>Hub information</strong> is too long. Should not be longer than 4096 characters. Current length:"
+msgstr ""
+
+#: hublist.module:447
+msgid "create hub"
+msgstr ""
+
+#: hublist.module:447
+msgid "delete own hubs"
+msgstr ""
+
+#: hublist.module:447
+msgid "delete any hub"
+msgstr ""
+
+#: hublist.module:447
+msgid "edit own hubs"
+msgstr ""
+
+#: hublist.module:447
+msgid "edit any hub"
+msgstr ""
+
+#: hublist.module:447
+msgid "administer hublist"
+msgstr ""
+
+#: hublist.module:424
+msgid "Direct Connect Hublist"
+msgstr ""
+
+#: hublist.module:425
+msgid "Configure Direct Connect Hublist module"
+msgstr ""
+
+#: hublist.info:0 views/hublist.views.inc:25
+msgid "Hublist"
+msgstr ""
+
+#: hublist.info:0
+msgid "A Direct Connect hublist with NMDC, ADC and ADCS support"
+msgstr ""
+
+#: views/hublist.views.inc:40
+msgid "Hub protocol"
+msgstr ""
+
+#: views/hublist.views.inc:41
+msgid "Protocol of the hub (adc://, adcs:// or dchub://)"
+msgstr ""
+
+#: views/hublist.views.inc:78
+msgid "Hub URL"
+msgstr ""
+
+#: views/hublist.views.inc:79
+msgid "Full Hub URL so you don't have to append the protocol and address together to get a clickable url."
+msgstr ""
+
+#: views/hublist.views.inc:97
+msgid "Hub notes"
+msgstr ""
+
+#: views/hublist.views.inc:98
+msgid "Important notes for the users"
+msgstr ""
+
+#: views/hublist.views.inc:117
+msgid "Hub website"
+msgstr ""
+
+#: views/hublist.views.inc:155
+msgid "Description of the hub"
+msgstr ""
+
+#: views/hublist.views.inc:174
+msgid "Online status of the hub"
+msgstr ""
+
+#: views/hublist.views.inc:192;193
+msgid "Comment for hub status"
+msgstr ""
+
+#: views/hublist.views.inc:212
+msgid "Nick of the hublist pinger for the hub if not using the default"
+msgstr ""
+
+#: views/hublist.views.inc:230
+msgid "Pinger share"
+msgstr ""
+
+#: views/hublist.views.inc:231
+msgid "Pinger share in GiB"
+msgstr ""
+
+#: views/hublist.views.inc:288
+msgid "Current user count"
+msgstr ""
+
+#: views/hublist.views.inc:306
+msgid "Userlimit"
+msgstr ""
+
+#: views/hublist.views.inc:307
+msgid "Maximum users"
+msgstr ""
+
+#: views/hublist.views.inc:325
+msgid "Shared bytes"
+msgstr ""
+
+#: views/hublist.views.inc:326
+msgid "Currently shared bytes"
+msgstr ""
+
+#: views/hublist.views.inc:344
+msgid "Shared data amount (formatted)"
+msgstr ""
+
+#: views/hublist.views.inc:345
+msgid "Currently shared bytes (formatted)"
+msgstr ""
+
+#: views/hublist.views.inc:363
+msgid "Minimum share requirement in bytes"
+msgstr ""
+
+#: views/hublist.views.inc:364
+msgid "Minimum share to enter to the hub in bytes"
+msgstr ""
+
+#: views/hublist.views.inc:382
+msgid "Minimum share (formatted)"
+msgstr ""
+
+#: views/hublist.views.inc:383
+msgid "Minimum share to enter to the hub (formatted)"
+msgstr ""
+
+#: views/hublist.views.inc:402
+msgid "Minimum slots you need to open to be able to join"
+msgstr ""
+
+#: views/hublist.views.inc:421
+msgid "Maximum number of hubs"
+msgstr ""
+
+#: views/hublist.views.inc:439;440
+msgid "Successful ping attempts"
+msgstr ""
+
+#: views/hublist.views.inc:458;459
+msgid "All ping attempts"
+msgstr ""
+
+#: views/hublist.views.inc:478
+msgid "Shows how many times is this hub offline in a row"
+msgstr ""
+
+#: views/hublist.views.inc:496
+msgid "Reliability (formatted)"
+msgstr ""
+
+#: views/hublist.views.inc:497
+msgid "Hub reliability"
+msgstr ""
+

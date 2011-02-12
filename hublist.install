@@ -1,0 +1,254 @@
+<?php
+
+// Implementation of hook_schema()
+function hublist_schema() {
+  $schema['hublist'] = array(
+    'description' => 'The table for Direct Connect hubs',
+    'fields' => array(
+      'nid' => array(
+        'description' => 'The primary identifier for a node.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0),
+      'vid' => array(
+        'description' => 'The current version identifier.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0),
+      'hub_protocol' => array(
+        'description' => 'Protocol selector.',
+        'type' => 'varchar',
+        'length' => 16,
+        'not null' => TRUE,
+        'default' => ''),
+      'hub_address' => array(
+        'description' => 'The address of the hub',
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => ''),
+      'hub_url' => array(
+        'description' => 'The full URL of the hub',
+        'type' => 'varchar',
+        'length' => 144,
+        'not null' => TRUE,
+        'default' => ''),
+      'hub_important' => array(
+        'description' => 'Notes about the hub',
+        'type' => 'varchar',
+        'length' => 4096,
+        'not null' => TRUE,
+        'default' => ''),
+      'hub_website' => array(
+        'description' => 'The website of the hub',
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => ''),
+      'hub_owneremail' => array(
+        'description' => 'The e-mail address of the owner',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => ''),
+      'hub_description' => array(
+        'description' => 'The description of the hub',
+        'type' => 'varchar',
+        'length' => 512,
+        'not null' => TRUE,
+        'default' => ''),
+      'hub_status' => array(
+        'description' => 'Online status',
+        'type' => 'int',
+        'size' => 'normal',
+        'not null' => TRUE,
+        'default' => -1),
+      'hub_status_comment' => array(
+        'description' => 'Status comment',
+        'type' => 'varchar',
+        'length' => 256,
+        'not null' => TRUE,
+        'default' => ''),
+      'pinger_nick' => array(
+        'description' => 'Pinger nick',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => ''),
+      'pinger_password' => array(
+        'description' => 'Pinger password',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => ''),
+      'pinger_share' => array(
+        'description' => 'Pinger share',
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => 5,
+        'scale' => 0,
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0),
+      'pinger_slots' => array(
+        'description' => 'Pinger slots',
+        'type' => 'int',
+        'size' => 'normal',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 1),
+      'pinger_manual' => array(
+        'description' => 'Manual ping',
+        'type' => 'int',
+        'size' => 'tiny',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0),
+      'stat_pingdate' => array(
+        'description' => 'Latest ping attempt',
+        'mysql_type' => 'DATETIME',
+        'pgsql_type' => "timestamp without time zone",
+        'not null' => FALSE),
+      'stat_country' => array(
+        'description' => 'Country',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => ''),
+      'stat_hubsoftware' => array(
+        'description' => 'Hub software',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => ''),
+      'stat_usercount' => array(
+        'description' => 'Usercount',
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => 10,
+        'scale' => 0,
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0),
+      'stat_userlimit' => array(
+        'description' => 'Userlimit',
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => 10,
+        'scale' => 0,
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0),
+      'stat_shared' => array(
+        'description' => 'Currently shared',
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => 25,
+        'scale' => 0,
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0),
+      'stat_shared_formatted' => array(
+        'description' => 'Formatted actual share',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => ''),
+      'stat_minshare' => array(
+        'description' => 'Minimum share',
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => 25,
+        'scale' => 0,
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0),
+      'stat_minshare_formatted' => array(
+        'description' => 'Formatted minimum share',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => ''),
+      'stat_minslots' => array(
+        'description' => 'Minimum slots',
+        'type' => 'int',
+        'size' => 'big',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0),
+      'stat_maxhubs' => array(
+        'description' => 'Max hub number',
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => 25,
+        'scale' => 0,
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0),
+      'stat_successful_pings' => array(
+        'description' => 'Successful pings',
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => 25,
+        'scale' => 0,
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0),
+      'stat_all_pings' => array(
+        'description' => 'Total ping attempts',
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => 25,
+        'scale' => 0,
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0),
+      'stat_offline_count' => array(
+        'description' => 'Offline counter',
+        'type' => 'numeric',
+        'size' => 'normal',
+        'precision' => 10,
+        'scale' => 0,
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0),
+      'stat_reliability' => array(
+        'description' => 'Hub reliability',
+        'type' => 'varchar',
+        'length' => 42,
+        'not null' => TRUE,
+        'default' => 'N/A'),
+    ),
+    'primary key' => array('vid', 'nid'),
+    'indexes' => array(
+      'hublist_nid' => array('nid')
+    )
+  );
+  return $schema;
+} // end function hublist_schema()
+
+
+// Implementation of hook_install()
+function hublist_install() {
+  // Default options: Only "Published" is enabled for node type by default
+  variable_set('node_options_hub', array('status'));
+} // end function hublist_install()
+
+// Implementation of hook_uninstall()
+function hublist_uninstall() {
+  // Removing stored variables
+  variable_del('hublist_generator_enabled');
+  variable_del('hublist_generator_url');
+  variable_del('hublist_generator_name');
+  variable_del('hublist_generator_description');
+  variable_del('hublist_generator_path');
+  variable_del('hublist_generator_xmlinterval');
+  variable_del('hublist_pinger_enabled');
+  variable_del('hublist_pinger_debug');
+  variable_del('hublist_pinger_nick');
+  variable_del('hublist_pinger_hub_count');
+  variable_del('hublist_pinger_maximum_offline_counter');
+  variable_del('hublist_filter_dupes');
+} // end function hublist_uninstall()
