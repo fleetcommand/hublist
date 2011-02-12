@@ -1,14 +1,6 @@
 ; $Id$
 name = "Hublist"
 description = "A Direct Connect hublist with NMDC, ADC and ADCS support"
-core = 7.x
-version = "7.x-1.0"
-
-configure = admin/config/services/hublist
+core = 6.x
+version = "6.x-1.0"
 dependencies[] = date_api
-files[] = hublist.cron.inc
-files[] = hublist.pinger.adc.inc
-files[] = hublist.pinger.nmdc.inc
-files[] = hublist.util.inc
-files[] = views/hublist_handler_field_hub_status.inc
-files[] = views/hublist_handler_filter_hub_status.inc

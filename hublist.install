@@ -30,7 +30,7 @@ function hublist_schema() {
         'not null' => TRUE,
         'default' => ''),
       'hub_url' => array(
-        'description' => 'The full URL of the hub',
+        'description' => 'The full URL of the hub (computable)',
         'type' => 'varchar',
         'length' => 144,
         'not null' => TRUE,
@@ -108,8 +108,7 @@ function hublist_schema() {
         'default' => 0),
       'stat_pingdate' => array(
         'description' => 'Latest ping attempt',
-        'mysql_type' => 'DATETIME',
-        'pgsql_type' => "timestamp without time zone",
+        'type' => 'datetime',
         'not null' => FALSE),
       'stat_country' => array(
         'description' => 'Country',
@@ -232,12 +231,18 @@ function hublist_schema() {
 
 // Implementation of hook_install()
 function hublist_install() {
+  // Creating tables
+  drupal_install_schema('hublist');
+  
   // Default options: Only "Published" is enabled for node type by default
   variable_set('node_options_hub', array('status'));
 } // end function hublist_install()
 
 // Implementation of hook_uninstall()
 function hublist_uninstall() {
+  // Drop tables
+  drupal_uninstall_schema('hublist');
+  
   // Removing stored variables
   variable_del('hublist_generator_enabled');
   variable_del('hublist_generator_url');

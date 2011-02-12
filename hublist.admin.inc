@@ -1,11 +1,7 @@
 <?php
 // $Id$
 
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
-function hublist_admin_settings($form, &$form_state) {
+function hublist_admin_settings() {
   $form = array();
 
   $form['hublist_list'] = array(

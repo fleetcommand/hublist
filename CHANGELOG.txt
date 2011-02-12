@@ -2,8 +2,9 @@
                             DIRECT CONNECT HUBLIST
             A Drupal module for creating online Direct Connect hublist
 
-No release date yet: 1.0
+Nov 02, 2010: 1.0
 ------------------------
+* Fixed so the pinger won't fail on unknown characters in Hubname or HubINFO
 * [Ticket #6] Added option to auto-detect and filter duplicated hubs
 * Fixed so hub datasheet can be viewed without admin rights required
 * [Ticket #3] A banned hub cannot be deleted without the "delete any hub" right

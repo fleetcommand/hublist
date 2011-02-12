@@ -2,23 +2,20 @@
 // $Id$
 
 // Implementing hook_node_info()
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
 function hublist_node_info() {
   return array(
     'hub' => array(
       'name' => t('Hub'),
-      'base' => 'hublist',
+      'module' => 'hublist',
+      'has_body' => FALSE,
       'title_label' => t('Hub name'),
       'description' => t('An ADC or NMDC hub which will be included in the hublist'),
-    ),
+    )
   );
 } // end function hublist_node_info()
 
 // Implementing hook_access()
-function hublist_node_access($node, $op, $account) {
+function hublist_access($op, $node, $account) {
   switch ($op) {
     case 'view':
       return user_access('access content', $account);
@@ -46,167 +43,93 @@ function hublist_node_access($node, $op, $account) {
 } // end function hublist_access()
 
 // Implementing hook_load()
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
-function hublist_load($nodes) {
-  foreach ($nodes as $nid => &$node) {
-    $res = db_query('SELECT hub_protocol, hub_address, hub_url, hub_description, hub_important, pinger_nick, pinger_password, pinger_share, pinger_slots, hub_website, hub_owneremail, hub_status, hub_status_comment, stat_offline_count, stat_pingdate, stat_hubsoftware, stat_usercount, stat_userlimit, stat_shared_formatted, stat_minshare_formatted, stat_minslots, stat_maxhubs, stat_reliability FROM {hublist} WHERE vid = :vid', array(':vid' => $node->vid));
-    $owndata = $res->fetchObject();
-    foreach ($owndata as $property => &$value) {
-      $node->$property = $value;
-    }
-  }
+function hublist_load($node) {
+  $owndata = db_fetch_object(db_query('SELECT hub_protocol, hub_address, hub_url, hub_description, hub_important, pinger_nick, pinger_password, pinger_share, pinger_slots, hub_website, hub_owneremail, hub_status, hub_status_comment, stat_offline_count, stat_pingdate, stat_hubsoftware, stat_usercount, stat_userlimit, stat_shared_formatted, stat_minshare_formatted, stat_minslots, stat_maxhubs, stat_reliability FROM {hublist} WHERE vid = %d', $node->vid));
+  return $owndata;
 } // end function hublist_load()
 
+// Implementing hook_theme()
+function hublist_theme() {
+  return array(
+    'hub_datasheet' => array(
+      'template' => 'hub_datasheet',
+      'arguments' => array(
+        'hub_url' => NULL,
+        'hub_description' => NULL,
+        'hub_important' => NULL,
+        'hub_website' => NULL,
+        'hub_owneremail' => NULL,
+        'hub_status' => NULL,
+        'hub_status_num' => NULL,
+        'hub_status_comment' => NULL,
+        'stat_pingdate' => NULL,
+        'stat_hubsoftware' => NULL,
+        'stat_usercount' => NULL,
+        'stat_userlimit' => NULL,
+        'stat_shared_formatted' => NULL,
+        'stat_minshare_formatted' => NULL,
+        'stat_minslots' => NULL,
+        'stat_maxhubs' => NULL,
+        'stat_reliability' => NULL
+      ),
+    ),
+  );
+}
+
 // Implementing hook_view()
-function hublist_view($node, $view_mode) {
+function hublist_view($node, $teaser = FALSE, $page = FALSE) {
+  $node = node_prepare($node, $teaser);
+
   // Hub status
-  $hub_status_string = t('Unknown');
+  $hub_status = t('Unknown');
   switch ($node->hub_status) {
     case -1:
-      $hub_status_string = t('Waiting for hublist pinger');
+      $hub_status = t('Waiting for hublist pinger');
       break;
     case 0:
-      $hub_status_string = t('Online');
+      $hub_status = t('Online');
       break;
     case 1:
-      $hub_status_string = t('Offline');
+      $hub_status = t('Offline');
       break;
     case 2:
-      $hub_status_string = t('Banned');
+      $hub_status = t('Banned');
       break;
     case 3:
-      $hub_status_string = t('Inactive');
+      $hub_status = t('Inactive');
       break;
     case 4:
-      $hub_status_string = t('Duplicate');
+      $hub_status = t('Duplicate');
       break;
   }
 
-  // Basic hub info
-  $node->content['basic'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Basic info'),
+  $node->content['datasheet'] = array(
+    '#value' => theme('hub_datasheet', check_plain($node->hub_url), check_plain($node->hub_description), check_markup($node->hub_important), check_url($node->hub_website), check_plain($node->hub_owneremail), $hub_status, $node->hub_status, check_plain($node->hub_status_comment), $node->stat_pingdate, check_plain($node->stat_hubsoftware), check_plain($node->stat_usercount), check_plain($node->stat_userlimit), check_plain($node->stat_shared_formatted), check_plain($node->stat_minshare_formatted), check_plain($node->stat_minslots), check_plain($node->stat_maxhubs), check_plain($node->stat_reliability)),
+    '#weight' => 1,
   );
-
-  $node->content['basic']['address'] = array(
-    '#markup' => '<div><strong>' . t('Hub address') . '</strong>: <a href="' . check_plain($node->hub_url) . '">' . check_plain($node->hub_url) . '</a></div>',
-  );
-
-  $node->content['basic']['description'] = array(
-    '#markup' => '<div><strong>' . t('Description') . '</strong>: ' . check_plain($node->hub_description) . '</div>',
-  );
-
-  $node->content['basic']['reliability'] = array(
-    '#markup' => '<div><strong>' . t('Successful ping rate') . '</strong>: ' . check_plain($node->stat_reliability) . '</div>',
-  );
-
-  if ($node->stat_hubsoftware != '')
-    $node->content['basic']['hubsoftware'] = array(
-      '#markup' => '<div><strong>' . t('Hub software') . '</strong>: ' . check_plain($node->stat_hubsoftware) . '</div>',
-    );
-
-  if ($node->hub_important != '')
-    $node->content['basic']['notes'] = array(
-      '#markup' => '<div><strong>' . t('Notes') . '</strong>: ' . check_markup($node->hub_important) . '</div>',
-    );
-
-  // Contact details
-  if ($node->hub_website . $node->hub_owneremail != '') {
-    $node->content['contact'] = array(
-      '#type' => 'fieldset',
-      '#title' => t('Contact'),
-    );
-
-    if ($node->hub_website != '')
-      $node->content['contact']['website'] = array(
-        '#markup' => '<div><strong>' . t('Website') . ':</strong> <a href="' . check_url($node->hub_website) . '">' . check_url($node->hub_website) . '</a></div>',
-      );
-
-    if ($node->hub_owneremail != '')
-      $node->content['contact']['email'] = array(
-        '#markup' => '<div><strong>' . t('E-mail') . ':</strong> ' . check_plain($node->hub_owneremail) . '</div>',
-      );
-  } // end if
-
-  // Statistics
-  if ($node->hub_status == 0) {
-    $node->content['stat'] = array(
-      '#type' => 'fieldset',
-      '#title' => t('Current statistics'),
-    );
-
-    $node->content['stat']['usercount'] = array(
-      '#markup' => '<div><strong>' . t('Usercount') . ':</strong> ' . check_plain($node->stat_usercount) . '</div>',
-    );
-
-    $node->content['stat']['minshare'] = array(
-      '#markup' => '<div><strong>' . t('Minimum share') . ':</strong> ' . check_plain($node->stat_minshare_formatted) . '</div>',
-    );
-
-    $node->content['stat']['userlimit'] = array(
-      '#markup' => '<div><strong>' . t('User limit') . ':</strong> ' . check_plain($node->stat_userlimit) . '</div>',
-    );
-
-    $node->content['stat']['shared'] = array(
-      '#markup' => '<div><strong>' . t('Total share') . ':</strong> ' . check_plain($node->stat_shared_formatted) . '</div>',
-    );
-
-    $node->content['stat']['minslots'] = array(
-      '#markup' => '<div><strong>' . t('Minimum slots') . ':</strong> ' . check_plain($node->stat_minslots) . '</div>',
-    );
-
-    $node->content['stat']['maxhubs'] = array(
-      '#markup' => '<div><strong>' . t('Maximum hubs') . ':</strong> ' . check_plain($node->stat_maxhubs) . '</div>',
-    );
-  } // end if
-
-  // Hub status
-  $node->content['status'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Status'),
-  );
-
-  $node->content['status']['hubstatus'] = array(
-    '#markup' => '<div><strong>' . t('Hub status') . ':</strong> ' . $hub_status_string . '</div>',
-  );
-
-  if ($node->hub_status_comment != '')
-    $node->content['status']['note'] = array(
-      '#markup' => '<div><strong>' . t('Additional information') . ':</strong> ' . check_plain($node->hub_status_comment) . '</div>',
-    );
-
-  if ($node->hub_status != -1) // Only show ping attempt is not Waiting for hublist pinger
-    $node->content['status']['pingattempt'] = array(
-      '#markup' => '<div><strong>' . t('Latest ping attempt') . ':</strong> ' . $node->stat_pingdate . '</div>',
-    );
-
   return $node;
 }
 
 // Implementing hook_form()
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
 function hublist_form(&$node) {
-  $type = node_type_get_type($node);
+  $type = node_get_types('type', $node);
   $disable_hub_address = isset($node->hub_status) ? ($node->hub_status == 2) : FALSE;
 
   if ($type->has_title) {
-    $form['title'] = array(
-      '#type' => 'textfield',
-      '#title' => check_plain($type->title_label),
-      '#required' => TRUE,
-      '#default_value' => $node->title,
-      '#weight' => -5,
+  $form['title'] = array(
+    '#type' => 'textfield',
+    '#title' => check_plain($type->title_label),
+    '#required' => TRUE,
+    '#default_value' => $node->title,
+    '#weight' => -5,
     );
   }
 
-  // Hub specific fields
+  if ($type->has_body) {
+    $form['body_field'] = node_body_field($node, $type->body_label, $type->min_word_count);
+  }
 
+  // Hub specific fields
   $form['basic'] = array(
     '#type' => 'fieldset',
     '#title' => t('Basic hub info'),
@@ -220,9 +143,9 @@ function hublist_form(&$node) {
     '#options' => array(
       'dchub://' => 'dchub://',
       'adc://' => 'adc://',
-      'adcs://' => 'adcs://',
+      'adcs://' => 'adcs://'
     ),
-    '#required' => TRUE,
+    '#required' => TRUE
   );
 
   $form['basic']['hub_address'] = array(
@@ -231,7 +154,7 @@ function hublist_form(&$node) {
     '#description' => t('Enter hub host and port denoted by a colon. For example <strong>my.hub.com:5396</strong>'),
     '#default_value' => isset($node->hub_address) ? $node->hub_address : '',
     '#maxlength' => 128,
-    '#required' => TRUE,
+    '#required' => TRUE
   );
 
   if ($disable_hub_address) {
@@ -248,13 +171,13 @@ function hublist_form(&$node) {
     '#type' => 'textarea',
     '#title' => t('Information shared with users'),
     '#description' => t('If you want to share any important information about connecting to or using the hub, you can enter here. <strong>This will be visible on the hub datasheet on the web, but not in the hublist for the clients.</strong>'),
-    '#default_value' => isset($node->hub_important) ? $node->hub_important : '',
+    '#default_value' => isset($node->hub_important) ? $node->hub_important : ''
   );
 
   $form['pinger'] = array(
     '#type' => 'fieldset',
     '#title' => t('Hublist pinger'),
-    '#description' => t('A robot program called \'Hublist pinger\' is running in the background which connects to the hubs from time to time and verifies the user count and other data. Finally it updates the hub in the hublist.<br />If you want, you can specify a user name and password here for the hublist pinger. It is not mandatory, but you may want to customize it if you have a minimum share requirement on your hub which would cause the pinger to be disconnected or if you registered a user for the pinger on your hub.<br /><strong>Important:</strong> If the pinger can\'t connect, the hub won\'t appear in the hublist.'),
+    '#description' => t('A robot program called \'Hublist pinger\' is running in the background which connects to the hubs from time to time and verifies the user count and other data. Finally it updates the hub in the hublist.<br />If you want, you can specify a user name and password here for the hublist pinger. It is not mandatory, but you may want to customize it if you have a minimum share requirement on your hub which would cause the pinger to be disconnected or if you registered a user for the pinger on your hub.<br /><strong>Important:</strong> If the pinger can\'t connect, the hub won\'t appear in the hublist.')
   );
 
   $form['pinger']['pinger_nick'] = array(
@@ -262,7 +185,7 @@ function hublist_form(&$node) {
     '#title' => t('Pinger nick'),
     '#description' => t('The user name of the pinger. If you leave it blank, the default nick will be used.'),
     '#default_value' => isset($node->pinger_nick) ? $node->pinger_nick : '',
-    '#maxlength' => 32,
+    '#maxlength' => 32
   );
 
   $form['pinger']['pinger_password'] = array(
@@ -270,7 +193,7 @@ function hublist_form(&$node) {
     '#title' => t('Pinger password'),
     '#description' => t('Enter the password here if you registered a user for the pinger. Leave it blank if no password is required for connecting to your hub.'),
     '#default_value' => isset($node->pinger_password) ? $node->pinger_password : '',
-    '#maxlength' => 32,
+    '#maxlength' => 32
   );
 
   $form['pinger']['pinger_slots'] = array(
@@ -279,7 +202,7 @@ function hublist_form(&$node) {
     '#description' => t('Specify here how many open slots should the pinger claim to have when checking your hub.'),
     '#default_value' => isset($node->pinger_slots) ? $node->pinger_slots : 1,
     '#maxlength' => 2,
-    '#required' => TRUE,
+    '#required' => TRUE
   );
 
   $form['pinger']['pinger_share'] = array(
@@ -288,7 +211,7 @@ function hublist_form(&$node) {
     '#description' => t('By default, the hublist pinger enters the hub by claiming 0 B shared. If you have a minimum share requirement on the hub, you may want to specify here how many GiB should the pinger use when checking your hub (whole number). Note that if the pinger cannot connect, your hub won\'t show up in the hublist.'),
     '#default_value' => isset($node->pinger_share) ? $node->pinger_share : 0,
     '#maxlength' => 5,
-    '#required' => TRUE,
+    '#required' => TRUE
   );
 
   $form['hubcontact'] = array(
@@ -301,7 +224,7 @@ function hublist_form(&$node) {
     '#title' => t('Website'),
     '#description' => t('If the hub has a website, specify its URL here.'),
     '#default_value' => isset($node->hub_website) ? $node->hub_website : '',
-    '#maxlength' => 128,
+    '#maxlength' => 128
   );
 
   $form['hubcontact']['hub_owneremail'] = array(
@@ -309,14 +232,14 @@ function hublist_form(&$node) {
     '#title' => t('Contact e-mail'),
     '#description' => t('A public e-mail address for the users which is <strong>visible</strong> on the hub datasheet.'),
     '#default_value' => isset($node->hub_owneremail) ? $node->hub_owneremail : '',
-    '#maxlength' => 64,
+    '#maxlength' => 64
   );
 
   if (user_access('administer hublist')) {
     // Admin section
     $form['adminsection'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Administration'),
+      '#title' => t('Administration')
     );
 
     $form['adminsection']['hub_status'] = array(
@@ -329,9 +252,9 @@ function hublist_form(&$node) {
         1 => t('Offline'),
         2 => t('Banned'),
         3 => t('Inactive'),
-        4 => t('Duplicate'),
+        4 => t('Duplicate')
       ),
-      '#required' => TRUE,
+      '#required' => TRUE
     );
 
     $form['adminsection']['hub_status_comment'] = array(
@@ -339,7 +262,7 @@ function hublist_form(&$node) {
       '#title' => t('Comment for status'),
       '#description' => t('Comment which explains the status of the hub. For example, you can specify here the ban reason.'),
       '#default_value' => isset($node->hub_status_comment) ? $node->hub_status_comment : '',
-      '#maxlength' => 256,
+      '#maxlength' => 256
     );
 
     $form['adminsection']['stat_offline_count'] = array(
@@ -348,7 +271,7 @@ function hublist_form(&$node) {
       '#description' => t('This field specifies the number of unsuccessful ping attempts in a row. If this reaches a predefined value, the hub is set to \'Inactive\' and won\'t be pinged anymore. See the hublist administration page for details.'),
       '#default_value' => isset($node->stat_offline_count) ? $node->stat_offline_count : '0',
       '#maxlength' => 5,
-      '#required' => TRUE,
+      '#required' => TRUE
     );
 
     $form['adminsection']['stat_pingdate'] = array(
@@ -358,26 +281,23 @@ function hublist_form(&$node) {
       '#default_value' => isset($node->stat_pingdate) ? $node->stat_pingdate : date('Y-m-d H:i:s'),
       '#date_format' => 'Y-m-d H:i:s',
       '#date_label_position' => 'within',
-      '#required' => TRUE,
+      '#required' => TRUE
     );
   }
+
   return $form;
 } // end function hublist_form()
 
 // Implementing hook_validate()
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
 function hublist_validate(&$node) {
   // Verifying hub host
   if (strpos($node->hub_address, " ")) {
     form_set_error("hub_address", t("<strong>Hub host</strong> cannot contain spaces."));
   }
   else {
-    $result = db_query("SELECT hub_address FROM {hublist} WHERE hub_address = :hub_address AND vid in(SELECT MAX(vid) from {hublist} GROUP BY nid) AND nid <> :nid", array(':hub_address' => $node->hub_address, ':nid' => $node->nid));
+    db_query("SELECT hub_address FROM {hublist} WHERE hub_address = '%s' AND vid in(SELECT MAX(vid) from {hublist} GROUP BY nid) AND nid <> %d", $node->hub_address, $node->nid);
 
-    if ($result->rowCount() != 0) {
+    if (db_affected_rows() != 0) {
       form_set_error("hub_address", t("A hub with the <strong>same address</strong> already exists in the hub list. You cannot add a hub twice."));
     }
   }
@@ -400,158 +320,59 @@ function hublist_validate(&$node) {
 }
 
 // Implementing hook_insert()
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
 function hublist_insert($node) {
   if (user_access('administer hublist')) {
-    // TODO Please review the conversion of this statement to the D7 database API syntax.
-    /* db_query("INSERT INTO {hublist} (vid, nid, hub_protocol, hub_address, hub_url, hub_important, pinger_nick, pinger_password, pinger_share, pinger_slots, hub_website, hub_owneremail, hub_status, hub_status_comment, stat_offline_count, stat_pingdate) VALUES (%d, %d, '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', '%s', %d, '%s', %d, '%s')", $node->vid, $node->nid, $node->hub_protocol, $node->hub_address, $node->hub_protocol . $node->hub_address, $node->hub_important, $node->pinger_nick, $node->pinger_password, $node->pinger_share, $node->pinger_slots, _hublist_fix_url($node->hub_website), $node->hub_owneremail, $node->hub_status, $node->hub_status_comment, $node->stat_offline_count, $node->stat_pingdate) */
-    $id = db_insert('hublist')
-      ->fields(array(
-        'vid' => $node->vid,
-        'nid' => $node->nid,
-        'hub_protocol' => $node->hub_protocol,
-        'hub_address' => $node->hub_address,
-        'hub_url' => $node->hub_protocol . $node->hub_address,
-        'hub_important' => $node->hub_important,
-        'pinger_nick' => $node->pinger_nick,
-        'pinger_password' => $node->pinger_password,
-        'pinger_share' => $node->pinger_share,
-        'pinger_slots' => $node->pinger_slots,
-        'hub_website' => Util::fixUrl($node->hub_website),
-        'hub_owneremail' => $node->hub_owneremail,
-        'hub_status' => $node->hub_status,
-        'hub_status_comment' => $node->hub_status_comment,
-        'stat_offline_count' => $node->stat_offline_count,
-        'stat_pingdate' => $node->stat_pingdate,
-      ))
-      ->execute();
+    db_query("INSERT INTO {hublist} (vid, nid, hub_protocol, hub_address, hub_url, hub_important, pinger_nick, pinger_password, pinger_share, pinger_slots, hub_website, hub_owneremail, hub_status, hub_status_comment, stat_offline_count, stat_pingdate) VALUES (%d, %d, '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', '%s', %d, '%s', %d, '%s')", $node->vid, $node->nid, $node->hub_protocol, $node->hub_address, $node->hub_protocol . $node->hub_address, $node->hub_important, $node->pinger_nick, $node->pinger_password, $node->pinger_share, $node->pinger_slots, _hublist_fix_url($node->hub_website), $node->hub_owneremail, $node->hub_status, $node->hub_status_comment, $node->stat_offline_count, $node->stat_pingdate);
   }
   else {
-    // TODO Please review the conversion of this statement to the D7 database API syntax.
-    /* db_query("INSERT INTO {hublist} (vid, nid, hub_protocol, hub_address, hub_url, hub_important, pinger_nick, pinger_password, pinger_share, pinger_slots, hub_website, hub_owneremail) VALUES (%d, %d, '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', '%s')", $node->vid, $node->nid, $node->hub_protocol, $node->hub_address, $node->hub_protocol . $node->hub_address, $node->hub_important, $node->pinger_nick, $node->pinger_password, $node->pinger_share, $node->pinger_slots, _hublist_fix_url($node->hub_website), $node->hub_owneremail) */
-    $id = db_insert('hublist')
-      ->fields(array(
-        'vid' => $node->vid,
-        'nid' => $node->nid,
-        'hub_protocol' => $node->hub_protocol,
-        'hub_address' => $node->hub_address,
-        'hub_url' => $node->hub_protocol . $node->hub_address,
-        'hub_important' => $node->hub_important,
-        'pinger_nick' => $node->pinger_nick,
-        'pinger_password' => $node->pinger_password,
-        'pinger_share' => $node->pinger_share,
-        'pinger_slots' => $node->pinger_slots,
-        'hub_website' => Util::fixUrl($node->hub_website),
-        'hub_owneremail' => $node->hub_owneremail,
-      ))
-      ->execute();
+    db_query("INSERT INTO {hublist} (vid, nid, hub_protocol, hub_address, hub_url, hub_important, pinger_nick, pinger_password, pinger_share, pinger_slots, hub_website, hub_owneremail) VALUES (%d, %d, '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', '%s')", $node->vid, $node->nid, $node->hub_protocol, $node->hub_address, $node->hub_protocol . $node->hub_address, $node->hub_important, $node->pinger_nick, $node->pinger_password, $node->pinger_share, $node->pinger_slots, _hublist_fix_url($node->hub_website), $node->hub_owneremail);
   }
 } // end function hublist_insert()
 
 // Implementing hook_update()
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
 function hublist_update($node) {
-  // TODO is the comment below correct?
   // if this is a new node or we're adding a new revision,
   if ($node->revision) {
     hublist_insert($node);
   }
   else {
     if (user_access('administer hublist')) {
-      // TODO Please review the conversion of this statement to the D7 database API syntax.
-      /* db_query("UPDATE {hublist} SET hub_protocol = '%s', hub_address = '%s', hub_url = '%s', hub_important = '%s', pinger_nick = '%s', pinger_password = '%s', pinger_share = %d, pinger_slots = %d, hub_website = '%s', hub_owneremail = '%s', hub_status = %d, hub_status_comment = '%s', stat_offline_count = %d, stat_pingdate = '%s' WHERE vid = %d", $node->hub_protocol, $node->hub_address, $node->hub_protocol . $node->hub_address, $node->hub_important, $node->pinger_nick, $node->pinger_password, $node->pinger_share, $node->pinger_slots, _hublist_fix_url($node->hub_website), $node->hub_owneremail, $node->hub_status, $node->hub_status_comment, $node->stat_offline_count, $node->stat_pingdate, $node->vid) */
-      db_update('hublist')
-        ->fields(array(
-          'hub_protocol' => $node->hub_protocol,
-          'hub_address' => $node->hub_address,
-          'hub_url' => $node->hub_protocol . $node->hub_address,
-          'hub_important' => $node->hub_important,
-          'pinger_nick' => $node->pinger_nick,
-          'pinger_password' => $node->pinger_password,
-          'pinger_share' => $node->pinger_share,
-          'pinger_slots' => $node->pinger_slots,
-          'hub_website' => Util::fixUrl($node->hub_website),
-          'hub_owneremail' => $node->hub_owneremail,
-          'hub_status' => $node->hub_status,
-          'hub_status_comment' => $node->hub_status_comment,
-          'stat_offline_count' => $node->stat_offline_count,
-          'stat_pingdate' => $node->stat_pingdate,
-        ))
-        ->condition('vid', $node->vid)
-        ->execute();
+      db_query("UPDATE {hublist} SET hub_protocol = '%s', hub_address = '%s', hub_url = '%s', hub_important = '%s', pinger_nick = '%s', pinger_password = '%s', pinger_share = %d, pinger_slots = %d, hub_website = '%s', hub_owneremail = '%s', hub_status = %d, hub_status_comment = '%s', stat_offline_count = %d, stat_pingdate = '%s' WHERE vid = %d", $node->hub_protocol, $node->hub_address, $node->hub_protocol . $node->hub_address, $node->hub_important, $node->pinger_nick, $node->pinger_password, $node->pinger_share, $node->pinger_slots, _hublist_fix_url($node->hub_website), $node->hub_owneremail, $node->hub_status, $node->hub_status_comment, $node->stat_offline_count, $node->stat_pingdate, $node->vid);
     }
     else {
-      // TODO Please review the conversion of this statement to the D7 database API syntax.
-      /* db_query("UPDATE {hublist} SET hub_protocol = '%s', hub_address = '%s', hub_url = '%s', hub_important = '%s', pinger_nick = '%s', pinger_password = '%s', pinger_share = %d, pinger_slots = %d, hub_website = '%s', hub_owneremail = '%s' WHERE vid = %d", $node->hub_protocol, $node->hub_address, $node->hub_protocol . $node->hub_address, $node->hub_important, $node->pinger_nick, $node->pinger_password, $node->pinger_share, $node->pinger_slots, _hublist_fix_url($node->hub_website), $node->hub_owneremail, $node->vid) */
-      db_update('hublist')
-        ->fields(array(
-          'hub_protocol' => $node->hub_protocol,
-          'hub_address' => $node->hub_address,
-          'hub_url' => $node->hub_protocol . $node->hub_address,
-          'hub_important' => $node->hub_important,
-          'pinger_nick' => $node->pinger_nick,
-          'pinger_password' => $node->pinger_password,
-          'pinger_share' => $node->pinger_share,
-          'pinger_slots' => $node->pinger_slots,
-          'hub_website' => Util::fixUrl($node->hub_website),
-          'hub_owneremail' => $node->hub_owneremail,
-        ))
-        ->condition('vid', $node->vid)
-        ->execute();
+      db_query("UPDATE {hublist} SET hub_protocol = '%s', hub_address = '%s', hub_url = '%s', hub_important = '%s', pinger_nick = '%s', pinger_password = '%s', pinger_share = %d, pinger_slots = %d, hub_website = '%s', hub_owneremail = '%s' WHERE vid = %d", $node->hub_protocol, $node->hub_address, $node->hub_protocol . $node->hub_address, $node->hub_important, $node->pinger_nick, $node->pinger_password, $node->pinger_share, $node->pinger_slots, _hublist_fix_url($node->hub_website), $node->hub_owneremail, $node->vid);
     }
   }
 } // end function hublist_update()
 
 // Implementing hook_delete()
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
 function hublist_delete($node) {
   // Notice that we're matching all revision, by using the node's nid.
-  // TODO Please review the conversion of this statement to the D7 database API syntax.
-  /* db_query('DELETE FROM {hublist} WHERE nid = %d', $node->nid) */
-  db_delete('hublist')
-    ->condition('nid', $node->nid)
-    ->execute();
+  db_query('DELETE FROM {hublist} WHERE nid = %d', $node->nid);
 } // end function hublist_delete
 
-// Implementing hook_node_revision_delete().
-function hublist_node_revision_delete($node) {
-  // Notice that we're matching a single revision based on the node's vid.
-  // TODO Please review the conversion of this statement to the D7 database API syntax.
-  /* db_query('DELETE FROM {hublist} WHERE vid = %d', $node->vid) */
-  db_delete('hublist')
-    ->condition('vid', $node->vid)
-    ->execute();
-}
+// Implementing hook_nodeapi()
+function hublist_nodeapi(&$node, $op, $teaser, $page) {
+  switch ($op) {
+    case 'delete revision':
+      // Notice that we're matching a single revision based on the node's vid.
+      db_query('DELETE FROM {hublist} WHERE vid = %d', $node->vid);
+      break;
+  }
+} // end function hublist_nodeapi()
 
 // Implementing hook_views_api()
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
 function hublist_views_api() {
   return array(
     'api' => 2.0,
-    'path' => drupal_get_path('module', 'hublist') . '/views',
+    'path' => drupal_get_path('module', 'hublist') . '/views'
   );
 }
 
 // Implementing hook_help()
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
 function hublist_help($path, $arg) {
   switch ($path) {
-    case 'admin/config/services/hublist':
+    case 'admin/build/hublist':
       return '<p>Hublist pinger module - build</p>';
     case 'admin/help#hublist':
       return '<p>Hublist pinger module - help</p>';
@@ -559,12 +380,8 @@ function hublist_help($path, $arg) {
 } // end function hublist_help()
 
 // Implementing hook_menu()
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
 function hublist_menu() {
-  $items['admin/config/services/hublist'] = array(
+  $items['admin/build/hublist'] = array(
     'title' => 'Direct Connect Hublist',
     'description' => 'Configure Direct Connect Hublist module',
     'page callback' => 'drupal_get_form',
@@ -573,56 +390,41 @@ function hublist_menu() {
     'file' => 'hublist.admin.inc',
     'type' => MENU_NORMAL_ITEM,
   );
-  $items['admin/config/services/hublist/general'] = array(
-    'title' => 'General',
-    'type' => MENU_DEFAULT_LOCAL_TASK,
-  );
-  $items['admin/config/services/hublist/debug'] = array(
-    'title' => 'Debug',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('hublist_admin_debug'),
-    'access arguments' => array('administer hublist'),
-    'file' => 'hublist.admin.debug.inc',
-    'type' => MENU_LOCAL_TASK,
-  );
   return $items;
 } // end function hublist_menu()
 
 // Implementing hook_cron()
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
 function hublist_cron() {
-  HublistPinger::run();
-  HublistPinger::generateXml();
+  if (_hublist_include('hublist', 'hublist.cron.inc')) {
+    _hublist_cron_pinger();
+    _hublist_cron_generator();
+  }
 } // end function hublist_cron()
 
-// Implementing hook_permission()
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
-function hublist_permission() {
-  return array(
-    'administer hublist' => array(
-      'title' => t('Administer hublist'),
-      'description' => t('Configure Hublist and Pinger properties'),
-    ),
-    'create hub content' => array(
-      'title' => t('Hub: Create new content'),
-    ),
-    'edit own hub content' => array(
-      'title' => t('Hub: Edit own content'),
-    ),
-    'edit any hub content' => array(
-      'title' => t('Hub: Edit any content'),
-    ),
-    'delete own hub content' => array(
-      'title' => t('Hub: Delete own content'),
-    ),
-    'delete any hub content' => array(
-      'title' => t('Hub: Delete any content'),
-    ),
-  );
-} // end function hublist_permission()
+// Implementing hook_perm()
+function hublist_perm() {
+  return array('create hub', 'delete own hubs', 'delete any hub', 'edit own hubs', 'edit any hub', 'administer hublist');
+} // end function hublist_perm()
+
+function _hublist_include($module, $file) {
+  $result = FALSE;
+
+  $file = './' . drupal_get_path('module', $module) . '/' . $file;
+
+  if (file_exists($file) && is_file($file)) {
+    require_once($file);
+
+    $result = TRUE;
+  }
+
+  return $result;
+}
+
+// This function adds a http:// prefix for all URL if not beginning with a protocol selector
+function _hublist_fix_url($url) {
+  if (strlen($url) > 0) {
+    if (preg_match('/^[a-z]+:\/\//', $url) == 0)
+      $url = 'http://' . $url;
+  }
+  return $url;
+}

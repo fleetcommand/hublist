@@ -3,12 +3,12 @@
 class AdcPinger {
   private $cache, $info, $sid, $socket;
 
-  public function ping($host, $port, $nick, $password, $share = '0', $slots = '1', $secure = FALSE, $timeout = 30, $debug = FALSE) {
+  public function ping($host, $port, $nick, $password, $share = '0', $slots = '1', $secure = FALSE, $timeout = 30) {
 
     $this->info = array(
       'address' => gethostbyname($host),
       'country' => '',
-      'date' => REQUEST_TIME,
+      'date' => time(),
       'description' => '',
       'error' => '',
       'host' => $host,
@@ -29,11 +29,9 @@ class AdcPinger {
       'minslots' => 0,
       'maxhubs' => 0,
       'hubsoftware' => '',
-      'debug' => '',
     );
 
-    if ($debug)
-      $this->debug('Connecting to ' . $this->info['protocol'] . $this->info['host'] . ':' . $this->info['port'] . '...');
+    echo '<span>Connecting to ' . $this->info['protocol'] . $this->info['host'] . ':' . $this->info['port'] . '...</span><br />';
 
     $this->socket = fsockopen(($secure ? 'ssl://' : '') . $this->info['host'], $this->info['port'], $error_number, $error_message, 5);
     if ($this->socket) {
@@ -41,7 +39,7 @@ class AdcPinger {
       // TODO: Nem sok a 15 másodperc?
       stream_set_timeout($this->socket, 15);
 
-      $this->send('HSUP ADBAS0 ADBASE ADTIGR ADPING', $debug);
+      fwrite($this->socket, 'HSUP ADBAS0 ADBASE ADTIGR ADPING' . chr(10));
 
       while (!feof($this->socket) && !$this->info['online'] && $this->info['error'] == '') {
         $this->cache .= fread($this->socket, 2048);
@@ -53,9 +51,11 @@ class AdcPinger {
           }
         }
         else {
+
           if ($this->cache != '') {
             $commands = explode(chr(10), $this->cache);
-            if ($this->cache[strlen($this->cache) -1] == chr(10)) {
+
+            if ($this->cache[strlen($this->cache)-1] == chr(10)) {
               $command_count = sizeof($commands);
               $this->cache = '';
             }
@@ -64,18 +64,18 @@ class AdcPinger {
               $this->cache = $commands[$command_count];
             }
 
-            for ($index = 0; $index < $command_count; $index++) {
+            for ($index = 0; $index<$command_count; $index++) {
               $command = $commands[$index];
               if (strlen($command) > 0) {
-                $this->handle($command, $debug);
+                $this->handle($command);
               }
             }
           }
-        } // end if($streamstatus['timed_out'])
-        if ((REQUEST_TIME - $this->info['date']) > $timeout) {
+        } // end if ($streamstatus['timed_out'])
+        if ((time() - $this->info['date']) > $timeout) {
           $this->info['error'] = 'Ping timeout';
         }
-      } // end while
+      }
 
       fclose($this->socket);
     }
@@ -83,32 +83,27 @@ class AdcPinger {
       $this->info['error'] = $error_message;
     }
 
-    if ($debug)
-      $this->debug('Disconnected');
+    echo '<span>Disconnected.</span><br />';
 
     return $this->info;
-  } // end method ping
+  }
 
-  private function handle($command, $debug) {
+  protected function handle($command) {
     $command_parts = explode(' ', $command);
     $command_type = $command_parts[0];
-
-    if ($debug)
-      $this->debug('<< ' . $command);
 
     switch ($command_type) {
       case 'BINF':
         $this->info['users'] = $this->info['users'] + 1;
-        if (preg_match('/.* SS([0-9]+).*/', $command, $groups)) {
+        if (ereg('.* SS([0-9]+).*', $command, $groups)) {
           $this->info['shared'] = $groups[1] + $this->info['shared'];
         }
         if ($command_parts[1] == $this->info['sid']) {
-          if ($debug)
-            $this->debug('Checked');
-
+          echo '<span>Checked.</span><br />';
           $this->info['online'] = TRUE;
         }
         break;
+
       case 'IINF':
         foreach ($command_parts as $named_field) {
           if (substr($named_field, 0, 2) == 'NI') {
@@ -121,7 +116,8 @@ class AdcPinger {
             $this->info['hubsoftware'] = str_replace('\s', ' ', substr($named_field, 2));
           }
         }
-      break;
+        break;
+
       case 'ISID':
         $this->info['sid'] = $command_parts[1];
         $this->info['pid'] = 'WPBRZB4JF6RA3Y4S7A6S7PXMNTHFK5BEATG56ZQ';
@@ -135,53 +131,38 @@ class AdcPinger {
         $info .= ' SS' . $this->info['pingershare'];
         $info .= ' SL' . $this->info['pingerslots'];
 
-        $this->send($info, $debug);
+        fwrite($this->socket, $info . chr(10));
         break;
-    } // end switch
-  } // end function handle
+    }
+  }
+}
 
-  private function send($command, $debug) {
-    if ($debug)
-      $this->debug('>> ' . $command);
+function base32encode($input) {
+  $base32_alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
 
-    fwrite($this->socket, $command . chr(10));
+  $output = '';
+  $position = 0;
+  $storedData = 0;
+  $storedBitCount = 0;
+  $index = 0;
+
+  while ($index < strlen($input)) {
+    $storedData <<= 8;
+    $storedData += ord($input[$index]);
+    $storedBitCount += 8;
+    $index += 1;
+
+    while ($storedBitCount >= 5) {
+      $storedBitCount -= 5;
+      $output .= $base32_alphabet[$storedData >> $storedBitCount];
+      $storedData &= ((1 << $storedBitCount) - 1);
+    }
   }
 
-  private function debug($msg) {
-    if ($this->info['debug'] != '')
-      $this->info['debug'] .= "\n";
-
-    $this->info['debug'] .= $msg;
+  if ($storedBitCount > 0) {
+    $storedData <<= (5-$storedBitCount);
+    $output .= $base32_alphabet[$storedData];
   }
 
-  private function base32Encode($input) {
-    $base32_alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
-
-    $output = '';
-    $position = 0;
-    $storedData = 0;
-    $storedBitCount = 0;
-    $index = 0;
-
-    while ($index < strlen($input)) {
-      $storedData <<= 8;
-      $storedData += ord($input[$index]);
-      $storedBitCount += 8;
-      $index += 1;
-
-      while ($storedBitCount >= 5) {
-        $storedBitCount -= 5;
-        $output .= $base32_alphabet[$storedData >> $storedBitCount];
-        $storedData &= ((1 << $storedBitCount) - 1);
-      }
-    }
-
-    if ($storedBitCount > 0) {
-      $storedData <<= (5 - $storedBitCount);
-      $output .= $base32_alphabet[$storedData];
-    }
-
-    return $output;
-  } // end function base32Encode
-
-} // end class AdcPinger
+  return $output;
+}

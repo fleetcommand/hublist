@@ -19,7 +19,7 @@ Features
 
 Prerequirements
 ---------------
-* Drupal 7.x
+* Drupal 6.x
 * Date API module (included in http://drupal.org/project/date/)
 * Views module (http://drupal.org/project/views)
   - Actually Views module is only optional, but strongly recommended since
@@ -28,22 +28,30 @@ Prerequirements
 Installation
 ------------
 1) Copy the content of this directory in /sites/all/modules/hublist
-2) Go to /admin/modules then enable Direct Connect Hublist
-3) Go to /admin/people/permissions and configure the rights for the hublist
+2) Go to /admin/build/modules then enable Direct Connect Hublist
+3) Go to /admin/user/permissions and configure the rights for the hublist
    module
-4) Go to /admin/config/services/hublist to configure the settings of the list
+4) Go to /admin/build/hublist to configure the settings of the list
 5) Don't forget to configure the cron job since the pinger needs that
 
 Reporting bugs and contact
 --------------------------
 The SVN and the bug tracking system is hosted at SourceForge, so if you find
 any bugs or have any recommendation or question, visit the following site:
- * http://elitedc.sourceforge.net/
+ * http://drupal.org/url_is_going_to_come_here
+
+Known issues
+------------
+Due to a bug in Date API module, the Last ping date is set to 1970-01-01 when
+you add that field to your view. Note that this bug does not affect the hub's
+datasheet, only happens when you add the Last ping date field to your view.
 
 Copyright
 ---------
-The Hublist module is licensed under the terms of GNU General Public License
-version 3. For details and full text of license, see the LICENSE.txt included
+The Hublist module is licensed under the terms of GNU General Public License,
+you can redistribute and/or modify it under the terms of the license as published
+by the Free Software Foundation; either version 2 of the License, or (at your option)
+any later version. For details and full text of license, see the LICENSE.txt included
 with this package or visit http://www.gnu.org/
 
 Currently the module includes contributions from the following people:

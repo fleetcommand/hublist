@@ -1,25 +1,21 @@
 <?php
 
 // Implementing hook_views_data()
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
 function hublist_views_data() {
   $data = array();
   $data['hublist']['table']['group'] = t('Hublist');
-
+  
   $data['hublist']['table']['join'] = array(
     'node_revisions' => array(
       'left_field' => 'vid',
-      'field' => 'vid',
+      'field' => 'vid'
     ),
     'node' => array(
       'left_field' => 'vid',
-      'field' => 'vid',
-    ),
+      'field' => 'vid'
+    )
   );
-
+  
   // Hub protocol
   $data['hublist']['hub_protocol'] = array(
     'title' => t('Hub protocol'),
@@ -38,7 +34,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Hub address
   $data['hublist']['hub_address'] = array(
     'title' => t('Hub address'),
@@ -57,7 +53,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Hub URL
   $data['hublist']['hub_url'] = array(
     'title' => t('Hub URL'),
@@ -76,7 +72,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Important hub notes
   $data['hublist']['hub_important'] = array(
     'title' => t('Hub notes'),
@@ -95,7 +91,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Website
   $data['hublist']['hub_website'] = array(
     'title' => t('Website'),
@@ -114,7 +110,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Owner E-mail
   $data['hublist']['hub_owneremail'] = array(
     'title' => t('E-mail'),
@@ -133,7 +129,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Hub description
   $data['hublist']['hub_description'] = array(
     'title' => t('Description'),
@@ -152,7 +148,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Hub status
   $data['hublist']['hub_status'] = array(
     'title' => t('Hub status'),
@@ -172,7 +168,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Comment for hub status
   $data['hublist']['hub_status_comment'] = array(
     'title' => t('Comment for hub status'),
@@ -191,7 +187,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Pinger nick
   $data['hublist']['pinger_nick'] = array(
     'title' => t('Pinger nick'),
@@ -210,7 +206,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Pinger password
   $data['hublist']['pinger_password'] = array(
     'title' => t('Pinger password'),
@@ -229,7 +225,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Pinger share
   $data['hublist']['pinger_share'] = array(
     'title' => t('Pinger share'),
@@ -248,7 +244,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Latest ping date
   $data['hublist']['stat_pingdate'] = array(
     'title' => t('Latest ping attempt'),
@@ -267,7 +263,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort_date',
     ),
   );
-
+  
   // Hubsoftware
   $data['hublist']['stat_hubsoftware'] = array(
     'title' => t('Hub software'),
@@ -286,7 +282,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Usercount
   $data['hublist']['stat_usercount'] = array(
     'title' => t('Usercount'),
@@ -305,7 +301,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Userlimit
   $data['hublist']['stat_userlimit'] = array(
     'title' => t('Userlimit'),
@@ -324,7 +320,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Shared bytes (numeric)
   $data['hublist']['stat_shared'] = array(
     'title' => t('Shared bytes'),
@@ -343,7 +339,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Shared bytes (formatted)
   $data['hublist']['stat_shared_formatted'] = array(
     'title' => t('Shared data amount (formatted)'),
@@ -362,7 +358,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Min share (numeric)
   $data['hublist']['stat_minshare'] = array(
     'title' => t('Minimum share requirement in bytes'),
@@ -381,7 +377,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Min share (formatted)
   $data['hublist']['stat_minshare_formatted'] = array(
     'title' => t('Minimum share (formatted)'),
@@ -400,7 +396,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Minimum slots number
   $data['hublist']['stat_minslots'] = array(
     'title' => t('Minimum slots'),
@@ -419,7 +415,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Maximum hubs
   $data['hublist']['stat_maxhubs'] = array(
     'title' => t('Maximum hubs'),
@@ -438,7 +434,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Successful pings
   $data['hublist']['stat_successful_pings'] = array(
     'title' => t('Successful ping attempts'),
@@ -457,7 +453,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // All pings
   $data['hublist']['stat_all_pings'] = array(
     'title' => t('All ping attempts'),
@@ -476,7 +472,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Offline counter
   $data['hublist']['stat_offline_count'] = array(
     'title' => t('Offline counter'),
@@ -495,7 +491,7 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   // Reliability (formatted)
   $data['hublist']['stat_reliability'] = array(
     'title' => t('Reliability (formatted)'),
@@ -514,15 +510,11 @@ function hublist_views_data() {
       'handler' => 'views_handler_sort',
     ),
   );
-
+  
   return $data;
 } // end function hublist_views_data()
 
 // Implementation of hook_views_handlers()
-/**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
- */
 function hublist_views_handlers() {
   return array(
     'info' => array(
