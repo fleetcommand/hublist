@@ -11,17 +11,54 @@ function hublist_admin_debug($form, &$form_state) {
   }
   $form = array();
 
-  $form['hublist_list'] = array(
+  $form['group_ping'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Ping'),
+    '#title' => t('Ping hub'),
     '#collapsible' => FALSE,
   );
-  $form['hublist_list']['hub_url'] = array(
+  $form['group_ping']['hub_url'] = array(
     '#type' => 'textfield',
     '#title' => t('Hub address'),
     '#default_value' => '',
     '#maxlength' => 255,
-    '#description' => t('Specify the full hub URL here including the protocol prefix (dchub://, adc:// or adcs://)'),
+    '#description' => t('Specify the full hub URL here. For an ADC hub, using the protocol specifier (adc:// or adcs://) and the port are mandatory, for NMDC hub using the dchub:// is optional, and you only need to specify the port if the hub uses other than the default (411).'),
+    '#required' => TRUE,
+  );
+  $form['group_advanced'] = array(
+    '#type' => 'fieldset',
+	'#title' => t('Optional settings'),
+	'#collapsible' => TRUE,
+	'#collapsed' => TRUE,
+  );
+  $form['group_advanced']['pinger_nick'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Pinger nick'),
+    '#default_value' => variable_get('hublist_pinger_nick', 'HublistPinger'),
+    '#maxlength' => 50,
+    '#required' => TRUE,
+    '#description' => t('The user name of the pinger used on this hub.'),
+  );
+  $form['group_advanced']['pinger_password'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Pinger password'),
+    '#description' => t('Enter the password here if required for connecting.'),
+    '#default_value' => '',
+    '#maxlength' => 32,
+  );
+  $form['group_advanced']['pinger_slots'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Opened slots claimed by the pinger'),
+    '#description' => t('Specify here how many open slots should the pinger claim to have when checking this hub.'),
+    '#default_value' => 1,
+    '#maxlength' => 2,
+    '#required' => TRUE,
+  );
+  $form['group_advanced']['pinger_share'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Pinger share (GiB)'),
+    '#description' => t('Specify the share size the pinger should use to ping this hub.'),
+    '#default_value' => 0,
+    '#maxlength' => 5,
     '#required' => TRUE,
   );
   $form['ping'] = array(
