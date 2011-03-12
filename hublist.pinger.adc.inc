@@ -66,7 +66,7 @@ class AdcPinger {
 
             for ($index = 0; $index<$command_count; $index++) {
               $command = $commands[$index];
-              if (strlen($command) > 0) {
+              if (drupal_strlen($command) > 0) {
                 $this->handle($command);
               }
             }
@@ -106,14 +106,14 @@ class AdcPinger {
 
       case 'IINF':
         foreach ($command_parts as $named_field) {
-          if (substr($named_field, 0, 2) == 'NI') {
-            $this->info['name'] = str_replace('\s', ' ', substr($named_field, 2));
+          if (drupal_substr($named_field, 0, 2) == 'NI') {
+            $this->info['name'] = str_replace('\s', ' ', drupal_substr($named_field, 2));
           }
-          elseif (substr($named_field, 0, 2) == 'DE') {
-            $this->info['description'] = str_replace('\s', ' ', substr($named_field, 2));
+          elseif (drupal_substr($named_field, 0, 2) == 'DE') {
+            $this->info['description'] = str_replace('\s', ' ', drupal_substr($named_field, 2));
           }
-          elseif (substr($named_field, 0, 2) == 'VE') {
-            $this->info['hubsoftware'] = str_replace('\s', ' ', substr($named_field, 2));
+          elseif (drupal_substr($named_field, 0, 2) == 'VE') {
+            $this->info['hubsoftware'] = str_replace('\s', ' ', drupal_substr($named_field, 2));
           }
         }
         break;
@@ -160,7 +160,7 @@ function base32encode($input) {
   }
 
   if ($storedBitCount > 0) {
-    $storedData <<= (5-$storedBitCount);
+    $storedData <<= (5 - $storedBitCount);
     $output .= $base32_alphabet[$storedData];
   }
 

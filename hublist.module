@@ -1,5 +1,4 @@
 <?php
-// $Id$
 
 // Implementing hook_node_info()
 function hublist_node_info() {
@@ -79,7 +78,7 @@ function hublist_view($node, $teaser = FALSE, $page = FALSE) {
   $node->content['basic'] = array(
     '#type' => 'fieldset',
     '#title' => t('Basic info'),
-	'#weight' => -3,
+    '#weight' => -3,
   );
 
   $node->content['basic']['address'] = array(
@@ -114,7 +113,7 @@ function hublist_view($node, $teaser = FALSE, $page = FALSE) {
     $node->content['contact'] = array(
       '#type' => 'fieldset',
       '#title' => t('Contact'),
-	  '#weight' => -2,
+      '#weight' => -2,
     );
 
     if ($node->hub_website != '')
@@ -135,7 +134,7 @@ function hublist_view($node, $teaser = FALSE, $page = FALSE) {
     $node->content['stat'] = array(
       '#type' => 'fieldset',
       '#title' => t('Current statistics'),
-	  '#weight' => -1,
+      '#weight' => -1,
     );
 
     $node->content['stat']['usercount'] = array(
@@ -173,7 +172,7 @@ function hublist_view($node, $teaser = FALSE, $page = FALSE) {
   $node->content['status'] = array(
     '#type' => 'fieldset',
     '#title' => t('Status'),
-	'#weight' => 0,
+    '#weight' => 0,
   );
 
   $node->content['status']['hubstatus'] = array(
@@ -400,8 +399,8 @@ function hublist_validate(&$node) {
     form_set_error("pinger_slots", t("<strong>Slot number</strong> for the pinger must be a whole number between 0 and 99."));
   }
   // Too long notes?
-  if (strlen($node->hub_important) > 4096) {
-    form_set_error("hub_important", t("<strong>Hub information</strong> is too long. Should not be longer than 4096 characters. Current length:") . " <strong>" . strlen($node->hub_important) . " chars</strong>");
+  if (drupal_strlen($node->hub_important) > 4096) {
+    form_set_error("hub_important", t("<strong>Hub information</strong> is too long. Should not be longer than 4096 characters. Current length:") . " <strong>" . drupal_strlen($node->hub_important) . " chars</strong>");
   }
 }
 
@@ -508,7 +507,7 @@ function _hublist_include($module, $file) {
 
 // This function adds a http:// prefix for all URL if not beginning with a protocol selector
 function _hublist_fix_url($url) {
-  if (strlen($url) > 0) {
+  if (drupal_strlen($url) > 0) {
     if (preg_match('/^[a-z]+:\/\//', $url) == 0)
       $url = 'http://' . $url;
   }

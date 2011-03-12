@@ -514,7 +514,7 @@ function hublist_views_data() {
   return $data;
 } // end function hublist_views_data()
 
-// Implementation of hook_views_handlers()
+// Implementation of hook_views_handlers().
 function hublist_views_handlers() {
   return array(
     'info' => array(

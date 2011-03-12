@@ -29,14 +29,14 @@ function _hublist_cron_pinger() {
           $hub_port = 0;
         }
 
-        if (isset($hub['pinger_nick']) and strlen($hub['pinger_nick'])) {
+        if (isset($hub['pinger_nick']) and drupal_strlen($hub['pinger_nick'])) {
           $pinger_nick = $hub['pinger_nick'];
         }
         else {
           $pinger_nick = $default_pinger_nick;
         }
 
-        if (isset($hub['pinger_password']) and strlen($hub['pinger_password'])) {
+        if (isset($hub['pinger_password']) and drupal_strlen($hub['pinger_password'])) {
           $pinger_password = $hub['pinger_password'];
         }
         else {

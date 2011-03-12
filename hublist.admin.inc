@@ -1,5 +1,4 @@
 <?php
-// $Id$
 
 function hublist_admin_settings() {
   $form = array();
