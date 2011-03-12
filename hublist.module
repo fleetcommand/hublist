@@ -127,7 +127,7 @@ function hublist_view($node, $teaser = FALSE, $page = FALSE) {
     if ($node->hub_website != '')
       $node->content['contact']['website'] = array(
         '#type' => 'markup',
-        '#value' => '<div><strong>' . t('Website') . ':</strong> <a href="' . check_url($node->hub_website) . '">' . check_url($node->hub_website) . '</a></div>',
+        '#value' => '<div><strong>' . t('Website') . ':</strong> ' . l($node->hub_website, $node->hub_website) . '</div>',
       );
 
     if ($node->hub_owneremail != '')
