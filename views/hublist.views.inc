@@ -1,6 +1,12 @@
 <?php
+/**
+ * @file
+ * Support for displaying hubs in a view.
+ */
 
-// Implementing hook_views_data()
+/**
+ * Implements hook_views_data().
+ */
 function hublist_views_data() {
   $data = array();
   $data['hublist']['table']['group'] = t('Hublist');
@@ -514,7 +520,9 @@ function hublist_views_data() {
   return $data;
 } // end function hublist_views_data()
 
-// Implementation of hook_views_handlers().
+/**
+ * Implements hook_views_handlers().
+ */
 function hublist_views_handlers() {
   return array(
     'info' => array(

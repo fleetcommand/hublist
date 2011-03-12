@@ -1,6 +1,12 @@
 <?php
+/**
+ * @file
+ * Install, update and uninstall functions for the Hublist module.
+ */
 
-// Implementation of hook_schema().
+/**
+ * Implements hook_schema().
+ */
 function hublist_schema() {
   $schema['hublist'] = array(
     'description' => 'The table for Direct Connect hubs',
@@ -228,8 +234,9 @@ function hublist_schema() {
   return $schema;
 } // end function hublist_schema()
 
-
-// Implementation of hook_install().
+/**
+ * Implements hook_install().
+ */
 function hublist_install() {
   // Creating tables
   drupal_install_schema('hublist');
@@ -238,7 +245,9 @@ function hublist_install() {
   variable_set('node_options_hub', array('status'));
 } // end function hublist_install()
 
-// Implementation of hook_uninstall().
+/**
+ * Implements hook_uninstall().
+ */
 function hublist_uninstall() {
   // Drop tables
   drupal_uninstall_schema('hublist');

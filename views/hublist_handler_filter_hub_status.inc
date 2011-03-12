@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @file
+ * Provides a filter for the Hub Status field.
+ */
 class hublist_handler_filter_hub_status extends views_handler_filter_in_operator {
   function get_value_options() {
     if (!isset($this->value_options)) {

@@ -1,6 +1,8 @@
 <?php
 
-// Implementing hook_node_info()
+/**
+ * Implements hook_node_info().
+ */
 function hublist_node_info() {
   return array(
     'hub' => array(
@@ -13,7 +15,9 @@ function hublist_node_info() {
   );
 } // end function hublist_node_info()
 
-// Implementing hook_access()
+/**
+ * Implements hook_access().
+ */
 function hublist_access($op, $node, $account) {
   switch ($op) {
     case 'view':
@@ -41,13 +45,17 @@ function hublist_access($op, $node, $account) {
   } // end switch
 } // end function hublist_access()
 
-// Implementing hook_load()
+/**
+ * Implements hook_load().
+ */
 function hublist_load($node) {
   $owndata = db_fetch_object(db_query('SELECT hub_protocol, hub_address, hub_url, hub_description, hub_important, pinger_nick, pinger_password, pinger_share, pinger_slots, hub_website, hub_owneremail, hub_status, hub_status_comment, stat_offline_count, stat_pingdate, stat_hubsoftware, stat_usercount, stat_userlimit, stat_shared_formatted, stat_minshare_formatted, stat_minslots, stat_maxhubs, stat_reliability FROM {hublist} WHERE vid = %d', $node->vid));
   return $owndata;
 } // end function hublist_load()
 
-// Implementing hook_view()
+/**
+ * Implements hook_view().
+ */
 function hublist_view($node, $teaser = FALSE, $page = FALSE) {
   $node = node_prepare($node, $teaser);
 
@@ -195,7 +203,9 @@ function hublist_view($node, $teaser = FALSE, $page = FALSE) {
   return $node;
 }
 
-// Implementing hook_form()
+/**
+ * Implements hook_form().
+ */
 function hublist_form(&$node) {
   $type = node_get_types('type', $node);
   $disable_hub_address = isset($node->hub_status) ? ($node->hub_status == 2) : FALSE;
@@ -373,7 +383,9 @@ function hublist_form(&$node) {
   return $form;
 } // end function hublist_form()
 
-// Implementing hook_validate()
+/**
+ * Implements hook_validate().
+ */
 function hublist_validate(&$node) {
   // Verifying hub host
   if (strpos($node->hub_address, " ")) {
@@ -404,7 +416,9 @@ function hublist_validate(&$node) {
   }
 }
 
-// Implementing hook_insert()
+/**
+ * Implements hook_insert().
+ */
 function hublist_insert($node) {
   if (user_access('administer hublist')) {
     db_query("INSERT INTO {hublist} (vid, nid, hub_protocol, hub_address, hub_url, hub_important, pinger_nick, pinger_password, pinger_share, pinger_slots, hub_website, hub_owneremail, hub_status, hub_status_comment, stat_offline_count, stat_pingdate) VALUES (%d, %d, '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', '%s', %d, '%s', %d, '%s')", $node->vid, $node->nid, $node->hub_protocol, $node->hub_address, $node->hub_protocol . $node->hub_address, $node->hub_important, $node->pinger_nick, $node->pinger_password, $node->pinger_share, $node->pinger_slots, _hublist_fix_url($node->hub_website), $node->hub_owneremail, $node->hub_status, $node->hub_status_comment, $node->stat_offline_count, $node->stat_pingdate);
@@ -414,7 +428,9 @@ function hublist_insert($node) {
   }
 } // end function hublist_insert()
 
-// Implementing hook_update()
+/**
+ * Implements hook_update().
+ */
 function hublist_update($node) {
   // if this is a new node or we're adding a new revision,
   if ($node->revision) {
@@ -430,13 +446,17 @@ function hublist_update($node) {
   }
 } // end function hublist_update()
 
-// Implementing hook_delete()
+/**
+ * Implements hook_delete().
+ */
 function hublist_delete($node) {
   // Notice that we're matching all revision, by using the node's nid.
   db_query('DELETE FROM {hublist} WHERE nid = %d', $node->nid);
 } // end function hublist_delete
 
-// Implementing hook_nodeapi()
+/**
+ * Implements hook_nodeapi().
+ */
 function hublist_nodeapi(&$node, $op, $teaser, $page) {
   switch ($op) {
     case 'delete revision':
@@ -446,7 +466,9 @@ function hublist_nodeapi(&$node, $op, $teaser, $page) {
   }
 } // end function hublist_nodeapi()
 
-// Implementing hook_views_api()
+/**
+ * Implements hook_views_api().
+ */
 function hublist_views_api() {
   return array(
     'api' => 2.0,
@@ -454,7 +476,9 @@ function hublist_views_api() {
   );
 }
 
-// Implementing hook_help()
+/**
+ * Implements hook_help().
+ */
 function hublist_help($path, $arg) {
   switch ($path) {
     case 'admin/build/hublist':
@@ -464,7 +488,9 @@ function hublist_help($path, $arg) {
   }
 } // end function hublist_help()
 
-// Implementing hook_menu()
+/**
+ * Implements hook_menu().
+ */
 function hublist_menu() {
   $items['admin/build/hublist'] = array(
     'title' => 'Direct Connect Hublist',
@@ -478,7 +504,9 @@ function hublist_menu() {
   return $items;
 } // end function hublist_menu()
 
-// Implementing hook_cron()
+/**
+ * Implements hook_cron().
+ */
 function hublist_cron() {
   if (_hublist_include('hublist', 'hublist.cron.inc')) {
     _hublist_cron_pinger();
@@ -486,7 +514,9 @@ function hublist_cron() {
   }
 } // end function hublist_cron()
 
-// Implementing hook_perm()
+/**
+ * Implements hook_perm().
+ */
 function hublist_perm() {
   return array('create hub', 'delete own hubs', 'delete any hub', 'edit own hubs', 'edit any hub', 'administer hublist');
 } // end function hublist_perm()
@@ -505,7 +535,17 @@ function _hublist_include($module, $file) {
   return $result;
 }
 
-// This function adds a http:// prefix for all URL if not beginning with a protocol selector
+/**
+ * Adds a http:// prefix for all URL if not beginning with a protocol selector.
+ *
+ * @param $url
+ *   A string containing the original URL.
+ *
+ * @return
+ *   A string with an added http:// prefix is no protocol selector was included,
+ *   otherwise the original string.
+ */
+// This function a
 function _hublist_fix_url($url) {
   if (drupal_strlen($url) > 0) {
     if (preg_match('/^[a-z]+:\/\//', $url) == 0)

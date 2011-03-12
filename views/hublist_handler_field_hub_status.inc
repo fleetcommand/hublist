@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @file
+ * Handler for the Hub Status field so text values are displayed in the view.
+ */
 class hublist_handler_field_hub_status extends views_handler_field_numeric {
 
   function render($values) {

@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @file
+ * Provides the functions required for the Cron job to check the hubs and
+ * generate the XML file.
+ */
 function _hublist_cron_pinger() {
   if (_hublist_include('hublist', 'hublist.pinger.nmdc.inc') && _hublist_include('hublist', 'hublist.pinger.adc.inc')) {
     if (variable_get('hublist_pinger_enabled', FALSE)) {

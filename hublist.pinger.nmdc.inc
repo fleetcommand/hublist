@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @file
+ * Implements an NMDC Hublist Pinger.
+ */
 class NmdcPinger {
   private $cache, $complete, $info, $socket;
   private $socket_error_msg = "OK", $socket_error_no = 0;
@@ -83,11 +86,11 @@ class NmdcPinger {
             $commands = explode('|', $this->cache);
 
             if ($this->cache[strlen($this->cache)-1] == '|') {
-              $command_count = sizeof($commands);
+              $command_count = count($commands);
               $this->cache = '';
             }
             else {
-              $command_count = sizeof($commands) - 1;
+              $command_count = count($commands) - 1;
               $this->cache = $commands[$command_count];
             } // end if
 
@@ -108,7 +111,8 @@ class NmdcPinger {
             $this->info['error'] = 'Ping timeout';
           }
           else {
-            // TODO: REMOVE THIS since this interferes with the No pinger whatever
+            // @todo Check if it's really necessary here, since it iterferes
+            // with the "No Pinger support" error message
             $this->info['error'] = 'Maximum time on hub exceeded';
           }
           $this->disconnect = TRUE;

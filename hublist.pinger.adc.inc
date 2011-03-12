@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @file
+ * Implements an ADC Hublist Pinger.
+ */
 class AdcPinger {
   private $cache, $info, $sid, $socket;
 
@@ -21,7 +24,7 @@ class AdcPinger {
       'protocol' => $secure ? 'adcs://' : 'adc://',
       'shared' => 0,
       'online' => FALSE,
-      'pingerextension' => TRUE, // TODO: we have to set it FALSE here then check for the existence of the PING extension later
+      'pingerextension' => TRUE, // @todo we have to set it FALSE here then check for the existence of the PING extension later
       'users' => 0,
       'warning' => '',
       'userlimit' => 0,
@@ -36,7 +39,6 @@ class AdcPinger {
     $this->socket = fsockopen(($secure ? 'ssl://' : '') . $this->info['host'], $this->info['port'], $error_number, $error_message, 5);
     if ($this->socket) {
       // Set stream timeout
-      // TODO: Nem sok a 15 másodperc?
       stream_set_timeout($this->socket, 15);
 
       fwrite($this->socket, 'HSUP ADBAS0 ADBASE ADTIGR ADPING' . chr(10));
@@ -56,11 +58,11 @@ class AdcPinger {
             $commands = explode(chr(10), $this->cache);
 
             if ($this->cache[strlen($this->cache)-1] == chr(10)) {
-              $command_count = sizeof($commands);
+              $command_count = count($commands);
               $this->cache = '';
             }
             else {
-              $command_count = sizeof($commands) - 1;
+              $command_count = count($commands) - 1;
               $this->cache = $commands[$command_count];
             }
 

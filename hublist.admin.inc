@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @file
+ * Administration form for Hublist module.
+ */
 function hublist_admin_settings() {
   $form = array();
 
