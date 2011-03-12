@@ -545,7 +545,6 @@ function _hublist_include($module, $file) {
  *   A string with an added http:// prefix is no protocol selector was included,
  *   otherwise the original string.
  */
-// This function a
 function _hublist_fix_url($url) {
   if (drupal_strlen($url) > 0) {
     if (preg_match('/^[a-z]+:\/\//', $url) == 0)
