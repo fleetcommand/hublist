@@ -186,12 +186,10 @@ function hublist_view($node, $view_mode) {
   return $node;
 }
 
-// Implementing hook_form()
 /**
- * @todo Please document this function.
- * @see http://drupal.org/node/1354
+ * Implements hook_form().
  */
-function hublist_form(&$node) {
+function hublist_form($node, &$form_state) {
   $type = node_type_get_type($node);
   $disable_hub_address = isset($node->hub_status) ? ($node->hub_status == 2) : FALSE;
 
