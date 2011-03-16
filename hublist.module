@@ -206,7 +206,7 @@ function hublist_view($node, $teaser = FALSE, $page = FALSE) {
 /**
  * Implements hook_form().
  */
-function hublist_form(&$node) {
+function hublist_form(&$node, $form_state) {
   $type = node_get_types('type', $node);
   $disable_hub_address = isset($node->hub_status) ? ($node->hub_status == 2) : FALSE;
 
