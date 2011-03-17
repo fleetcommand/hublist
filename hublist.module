@@ -480,9 +480,10 @@ function hublist_views_api() {
  * Implements hook_help().
  */
 function hublist_help($path, $arg) {
+  // @todo do a basic help
   switch ($path) {
-    case 'admin/build/hublist':
-      return '<p>Hublist pinger module - build</p>';
+    case 'admin/settings/hublist':
+      return '<p>Hublist pinger module - settings</p>';
     case 'admin/help#hublist':
       return '<p>Hublist pinger module - help</p>';
   }
@@ -492,7 +493,7 @@ function hublist_help($path, $arg) {
  * Implements hook_menu().
  */
 function hublist_menu() {
-  $items['admin/build/hublist'] = array(
+  $items['admin/settings/hublist'] = array(
     'title' => 'Direct Connect Hublist',
     'description' => 'Configure Direct Connect Hublist module',
     'page callback' => 'drupal_get_form',

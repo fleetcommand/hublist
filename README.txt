@@ -31,7 +31,7 @@ Installation
 2) Go to /admin/build/modules then enable Direct Connect Hublist
 3) Go to /admin/user/permissions and configure the rights for the hublist
    module
-4) Go to /admin/build/hublist to configure the settings of the list
+4) Go to /admin/settings/hublist to configure the settings of the list
 5) Don't forget to configure the cron job since the pinger needs that
 
 Reporting bugs and contact
